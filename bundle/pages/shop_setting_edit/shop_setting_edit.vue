@@ -155,7 +155,8 @@
 				this.codeTips = tip;
 			},
 			async getCountryListfn() {
-				let res = await getCountryList()
+				let res = await getCountryList();
+				toast({title: res.msg});
 				if(res.code == 1){
 					this.CountryList = res.data;
 				}
@@ -180,10 +181,10 @@
 					country_code: this.country_code,
 					type: 2,
 				}).then((res) => {
+					toast({
+						title: res.msg
+					});
 					if (res.code == 1) {
-						toast({
-							title: res.msg
-						});
 						this.$refs.uCode.start();
 					}
 				});
@@ -201,10 +202,10 @@
 					type: 2,
 					// key: SMSType.REGISTER,
 				}).then((res) => {
+					toast({
+						title: res.msg
+					});
 					if (res.code == 1) {
-						toast({
-							title: res.msg
-						});
 						this.$refs.uCode.start();
 					}
 				});
@@ -214,34 +215,40 @@
 					const res = await apiSetShopInfo({
 						nickname: this.nickname
 					})
+					this.getResult(res);
 				} else if (type == 2) {
 					const res = await apiSetShopInfo({
 						mobile: this.mobile,
 						code: this.code,
 						country_code: this.country_code
 					})
+					this.getResult(res);
 				} else if (type == 3) {
 					const res = await apiSetShopInfo({
 						intro: this.intro
 					})
+					this.getResult(res);
 				} else if (type == 66) {
 					const res = await apiSetShopInfo({
 						account: this.account
 					})
+					this.getResult(res);
 				} else if (type == 99) {
 					const res = await apiSetShopInfo({
 						email: this.email,
 						code: this.code
 					})
+					this.getResult(res);
 				}
-
-				this.$refs.uToast.show({
-					title: this.$t('bus_my.y21'),
-					type: 'success'
-				})
-				setTimeout(() => {
-					this.$Router.back()
-				}, 1000)
+				
+			},
+			getResult(res){
+				toast({title: res.msg});
+				if(res.code==1){
+					setTimeout(() => {
+						this.$Router.back()
+					}, 1000)
+				}
 			},
 			back() {
 				uni.navigateTo({

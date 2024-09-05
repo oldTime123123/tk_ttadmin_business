@@ -296,9 +296,9 @@ export function copy(str) {
 	aux.select();
 	document.execCommand("copy");
 	document.body.removeChild(aux);
-	uni.showToast({
-		title: "复制成功",
-	})
+	// uni.showToast({
+	// 	title: "复制成功",
+	// })
 	// #endif
 
 	// #ifndef H5

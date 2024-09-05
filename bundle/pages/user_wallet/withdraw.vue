@@ -120,13 +120,15 @@
 					method: "POST",
 					data: this.withdrawData
 				}).then(res => {
+					this.$toast({title: res.msg})
+					if(res.code==1){
+						uni.$emit('onBack');
+						uni.navigateBack()
+					}
 					uni.hideLoading()
-					this.$toast({title: this.$t('tk_show.sh_a12')})
-					uni.$emit('onBack');
-					uni.navigateBack()
 				}).catch(err => {
 					uni.hideLoading()
-					this.$toast({title: err.message})
+					this.$toast({title: err})
 				})
 			},
 			/**

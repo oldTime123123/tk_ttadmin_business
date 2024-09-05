@@ -56,6 +56,7 @@
 </template>
 
 <script>
+	import {toast} from '@/utils/tools'
 	import request from '@/utils/request'
 	export default {
 		data() {
@@ -114,7 +115,8 @@
 						page_size: this.pages.size
 					}
 				}).then(res => {
-					if(res.data.list){
+					toast({title: res.msg});
+					if(res.data&&res.data.list){
 						this.$refs.paging1.complete(res.data.list);
 						this.pages.page += 1
 					}else{
@@ -124,7 +126,7 @@
 					uni.hideLoading()
 				}).catch(err=>{
 					uni.showToast({
-						title: err.message,
+						title: err,
 						icon: "none",
 						duration: 3000
 					})

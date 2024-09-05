@@ -126,6 +126,7 @@
 </template>
 
 <script>
+   	import {toast} from '@/utils/tools'
 	import request from '@/utils/request'
 	import store from '@/store'
 	// import {
@@ -215,7 +216,8 @@
 					method: "POST"
 				})
 				.then(res => {
-					if(res.data.list){
+					toast({title: res.msg});
+					if(res.data&&res.data.list){
 						this.recordsList = res.data.list || []
 					}else{
 						this.nullShow = true;
@@ -224,7 +226,7 @@
 					
 				}).catch(err => {
 					uni.showToast({
-						title: err.message,
+						title: err,
 						icon: "none",
 						duration: 3000,
 					})
@@ -241,7 +243,7 @@
 				this.getData()
 			},
 			tradeShow(item){
-				
+				this.usePassword = '';
 				this.yhj_list = []
 				this.show1 = true
 				this.commodityId = item.id
@@ -259,10 +261,11 @@
 					}
 				})
 				.then(res => {
+					toast({title: res.msg});
 					this.yhj_list = res.data.data || []
 				}).catch(err => {
 					uni.showToast({
-						title: err.message,
+						title: err,
 						icon: "none",
 						duration: 30000
 					})
@@ -290,17 +293,19 @@
 					}
 				})
 				.then(res => {
-					this.$toast({title: this.$t('tk_zc.l_l79')})
-					this.show1 = false
-					this.usePassword = ''
-					this.getData()
-					uni.hideLoading()
-					this.yhj_list = []
-					this.selectIds = []
-					this.num_sum = 0
+					toast({title: res.msg});
+					if(res.code==1){
+						this.show1 = false
+						this.usePassword = ''
+						this.getData()
+						uni.hideLoading()
+						this.yhj_list = []
+						this.selectIds = []
+						this.num_sum = 0
+					}
 				}).catch(err => {
 					uni.showToast({
-						title: err.msg,
+						title: err,
 						icon: "none",
 						duration: 3000
 					})

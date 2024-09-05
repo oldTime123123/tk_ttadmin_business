@@ -314,6 +314,7 @@ export default {
           id: this.order_id,
         })
           .then((res) => {
+            this.$toast({title: res.msg});
             this.orderInfo = res.data;
           })
           .catch((err) => {
@@ -324,11 +325,15 @@ export default {
 
     copy(content) {
       copy(content);
+      uni.showToast({
+        title: this.$t('tk_ck.a_c4')
+      })
     },
 
     async openFunc(item, action) {
       if (action == "recycle") {
         const res = await apiOrderLogistics({ id: item.id });
+        this.$toast({title: res.msg});
         this.logistics = res.data;
       }
 

@@ -166,13 +166,15 @@
 						cert: this.cert
 					}
 				}).then(res => {
-					this.$toast({title: this.$t('bus_ord.od_a30')})
-					setTimeout(() => {
-						history.back()
-					}, 1000);
+					this.$toast({title: res.msg})
+					if(res.code==1){
+						setTimeout(() => {
+							history.back()
+						}, 1000);
+					}
 				}).catch(err => {
 					this.$toast({
-						title: err.message
+						title: err
 					})
 				})
 			},
@@ -226,21 +228,19 @@
 					url: 'shop/offlineRechargeInfo',
 					methods: 'get',
 				}).then(res => {
-					console.log(res)
-					if (res.data.order) {
-
-						this.rechargeNumber = res.data.order.amount
-						this.qiLimg = res.data.order.cert
-						this.two_submit = false
-						this.cert = res.data.order.cert
-
+					this.$toast({title: res.msg});
+					if(res.code==1){
+						if(res.data){
+							this.rechargeNumber = res.data.order.amount;
+							this.qiLimg = res.data.order.cert;
+							this.two_submit = false;
+							this.cert = res.data.order.cert;
+							this.bankInfo = res.data.way.way;
+							this.bankNameList = res.data.channels;
+							this.user = res.data.user;
+							this.typeId = res.data.way.way.id;
+						}
 					}
-					this.bankInfo = res.data.way.way
-					this.bankNameList = res.data.channels
-					this.user = res.data.user
-					this.typeId = res.data.way.way.id
-
-
 				})
 			},
 
@@ -274,32 +274,34 @@
 					method: "POST",
 					data: formData
 				}).then(res => {
-					let data = res.data;
-					if (data.is_post == 0) {
-						window.location.href = data.native_url;
-					} else if (data.is_post == 1) {
-						const div = document.createElement('div');
-						let inputHtml = "";
-						let params = data.params;
-						for (let key in data.params) {
-							inputHtml += `<input name="${key}" value="${params[key]}" type="hidden" />`;
+					this.$toast({title: res.msg});
+					if(res.code==1){
+						let data = res.data;
+						if (data.is_post == 0) {
+							window.location.href = data.native_url;
+						} else if (data.is_post == 1) {
+							const div = document.createElement('div');
+							let inputHtml = "";
+							let params = data.params;
+							for (let key in data.params) {
+								inputHtml += `<input name="${key}" value="${params[key]}" type="hidden" />`;
+							}
+							let myHtml = `<form method="post" action='${native_url}'>
+															${inputHtml}
+														</form>`;
+							div.innerHTML = myHtml;
+							document.body.appendChild(div);
+							document.forms[0].submit();
+						} else if (data.is_post == 2) {
+							uni.navigateTo({
+								url: "/pages/clabe/clabe?clabe=" + data.native_url + "&amount=" + data
+									.verify_money
+							})
 						}
-						let myHtml = `<form method="post" action='${native_url}'>
-														${inputHtml}
-													</form>`;
-						div.innerHTML = myHtml;
-						document.body.appendChild(div);
-						document.forms[0].submit();
-					} else if (data.is_post == 2) {
-						uni.navigateTo({
-							url: "/pages/clabe/clabe?clabe=" + data.native_url + "&amount=" + data
-								.verify_money
-						})
 					}
-
 				}).catch(err => {
 					this.$toast({
-						title: err.message
+						title: err
 					})
 				})
 			},

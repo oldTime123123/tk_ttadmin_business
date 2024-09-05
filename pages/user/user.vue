@@ -209,6 +209,7 @@
 			...mapActions(["getUser"]),
 			async downCallback() {
 				let res = await this.getUser();
+				this.$toast({title: res.msg});
 				this.info = JSON.parse(JSON.stringify(res.data));
 				this.mescroll.endSuccess(0, false);
 			},
@@ -230,10 +231,13 @@
 								url: 'account/kefuLogin',
 								method: "POST"
 							}).then(res => {
-								if (res.data && res.data.token) {
-									uni.hideLoading();
-									window.location.href = baseURL +
-										`/kefu?token=${res.data.token}&lang=${this.lang?this.lang:'en'}`
+								this.$toast({ title: res.msg });
+								if(res.code==1){
+									if (res.data && res.data.token) {
+										uni.hideLoading();
+										window.location.href = baseURL +
+											`/kefu?token=${res.data.token}&lang=${this.lang?this.lang:'en'}`
+									}
 								}
 							})
 						} else {
@@ -264,18 +268,17 @@
 			logout() {
 				//  退出登录
 				apiLogout().then((res) => {
-					uni.removeStorageSync('token')
-					this.$store.commit("logout");
-
-					this.$toast({
-						title: this.$t('bus_my.y19'),
-					});
-					setTimeout(() => {
-						// uni.reLaunch({
-						// 	url: "/pages/login/login",
-						// });
-						window.location.href = window.location.origin
-					}, 500);
+					this.$toast({title: res.msg});
+					if(res.code==1){
+						uni.removeStorageSync('token')
+						this.$store.commit("logout");
+						setTimeout(() => {
+							// uni.reLaunch({
+							// 	url: "/pages/login/login",
+							// });
+							window.location.href = window.location.origin
+						}, 500);
+					}
 				});
 			},
 			goLogin() {
@@ -284,14 +287,10 @@
 				});
 			},
 			async isRunFunc(event) {
-				console.log(event);
 				const res = await apiSetShopInfo({
 					is_run: event.value ? 1 : 0,
 				});
-				this.$refs.uToast.show({
-					title: this.$t('bus_my.y21'),
-					type: "success",
-				});
+				this.$toast({title: res.msg});
 			},
 			getweidu() {
 				request({
@@ -301,11 +300,11 @@
 						size: 1000
 					}
 				}).then(res => {
-					console.log(res.data, 'r');
-					this.numTotal = res.data.count;
+					this.$toast({title: res.msg});
+					this.numTotal = res.data ? res.data.count : undefined;
 				}).catch(err => {
 					uni.showToast({
-						title: err.message,
+						title: err,
 						icon: "none",
 						duration: 30000
 					})
@@ -331,6 +330,9 @@
 			},
 			copy(content) {
 				copy(content);
+				uni.showToast({
+                    title: this.$t('tk_ck.a_c4')
+                })
 			},
 		},
 		onShow() {
@@ -340,6 +342,7 @@
 			uni.showLoading();
 			this.getweidu();
 			this.getUser().then((res) => {
+				this.$toast({title: res.msg});
 				this.info = JSON.parse(JSON.stringify(res.data));
 				uni.hideLoading()
 			}).catch((err) => {

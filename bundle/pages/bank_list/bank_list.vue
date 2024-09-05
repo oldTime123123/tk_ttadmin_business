@@ -25,6 +25,7 @@
 </template>
 
 <script>
+    import {toast} from '@/utils/tools'
     import {
         apiGetWithdrawInfo,
         apiDelBank
@@ -59,11 +60,10 @@
 
             async clickBtn(event, id) {
                 const res = await apiDelBank({id})
-                this.$refs.uToast.show({
-                    title: '删除成功',
-                    type: 'success'
-                })
-                this.getWithdrawInfoFunc();
+                toast({title: res.msg});
+                if(res.code==1){
+                    this.getWithdrawInfoFunc();
+                }
             },
             
             toAddBankFunc(data) {

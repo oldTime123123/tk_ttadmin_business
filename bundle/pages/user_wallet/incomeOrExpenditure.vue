@@ -45,6 +45,7 @@
 </template>
 
 <script>
+	import {toast} from '@/utils/tools'
 	import request from '@/utils/request'
     export default {
         data() {
@@ -83,13 +84,14 @@
 							limit: this.pages.limit
 						}
 					}).then(res => {
-						if(res.data.list){
+						toast({title: res.msg});
+						if(res.code==1&&res.data.list){
 							this.$refs.paging.complete(res.data.list);
 							this.pages.page += 1
 						}
 						
 					}).catch(err => {
-
+						toast({title: err});
 					})
 				}
 				
@@ -107,22 +109,25 @@
 					url: "shop/getwalletLogType",
 					methods: 'get',
 				}).then(res => {
-					let newArr = []
-					res.data.forEach(item => {
-						newArr.push({
-							id: item.value,
-							cateName: item.lable
+					toast({title: res.msg});
+					if(res.code==1){
+						let newArr = []
+						res.data.forEach(item => {
+							newArr.push({
+								id: item.value,
+								cateName: item.lable
+							})
 						})
-					})
-					newArr.unshift({
-						id: '',
-						cateName: this.$t('bus_ord.od_a15')
-					})
-					this.columnsTxt = newArr[0].cateName;
-					this.pages.type = newArr[0].id;
-					this.columns = newArr;
+						newArr.unshift({
+							id: '',
+							cateName: this.$t('bus_ord.od_a15')
+						})
+						this.columnsTxt = newArr[0].cateName;
+						this.pages.type = newArr[0].id;
+						this.columns = newArr;
+						this.balance();
+					}
 					uni.hideLoading()
-					this.balance();
 				}).catch(err => {
 					uni.hideLoading()
 					this.$toast({title: err.message})

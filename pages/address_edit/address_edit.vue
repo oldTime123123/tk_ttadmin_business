@@ -119,7 +119,6 @@
         methods: {
             // 提交地址信息
             async onSubmit() {
-                console.log(this.type == 3)
                 let refund_address = {
                     nickname: this.type == 2 ? this.refund_address.nickname : '',
                     id: this.type == 3 ? this.id : '',
@@ -152,39 +151,46 @@
                 });
 
                 if (this.type == 2) {
-                    await apiSetShopInfo({
+                    let res = await apiSetShopInfo({
                         refund_address
                     })
+                    this.getResult(res)
                 } else if (this.type == 1) {
-                    await apiSetShopInfo({
+                    let res = await apiSetShopInfo({
                         ...refund_address
                     })
+                    this.getResult(res)
                 } else if (this.type == 3) {
-                    await apiOrderEditAddress({
+                    let res = await apiOrderEditAddress({
                         ...refund_address
                     })
+                    this.getResult(res)
                 }
-                this.$refs.uToast.show({
-                    title: this.$t('设置成功'),
-                    type: 'success'
-                })
-                setTimeout(() => {
-                    this.$Router.back()
-                }, 1000)
             },
-
+            getResult(res){
+                this.$toast({
+                    title: res.msg
+                });
+                if(res.code==1){
+                    setTimeout(() => {
+                        this.$Router.back()
+                    }, 1000)
+                }
+            },
             async getAddressFunc(id) {
-                const res = await apiOrderGetAddress({
-                    id
-                })
-
-                this.refund_address.nickname =  res.data.consignee;
-                this.refund_address.mobile = res.data.mobile
-                this.refund_address.province_id = res.data.province
-                this.refund_address.city_id = res.data.city
-                this.refund_address.district_id = res.data.district
-                this.refund_address.address = res.data.address
-                this.region = res.data.region[0] + " " + res.data.region[1] + " " + res.data.region[2]
+                const res = await apiOrderGetAddress({id})
+                this.$toast({
+                    title: res.msg
+                });
+                if(res.code==1){
+                    this.refund_address.nickname =  res.data.consignee;
+                    this.refund_address.mobile = res.data.mobile
+                    this.refund_address.province_id = res.data.province
+                    this.refund_address.city_id = res.data.city
+                    this.refund_address.district_id = res.data.district
+                    this.refund_address.address = res.data.address
+                    this.region = res.data.region[0] + " " + res.data.region[1] + " " + res.data.region[2]
+                }
             },
 
             // 地区选择，选择当前省市区的ID

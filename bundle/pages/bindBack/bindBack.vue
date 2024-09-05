@@ -70,6 +70,7 @@
 </template>
 
 <script>
+	import {toast} from '@/utils/tools'
 	import request from '@/utils/request'
 	import {
 		setBankcard
@@ -99,11 +100,14 @@
 					methods: 'get',
 
 				}).then((res) => {
+					toast({title: res.msg});
+					if(res.code==1&&res.data){
+						this.dataForm.bank_name = res.data.bank.bank_name
+						this.dataForm.account_holder = res.data.bank.account_holder
+						this.dataForm.bank_num = res.data.bank.bank_num
+					}
 					uni.hideLoading()
-					console.log(res)
-					this.dataForm.bank_name = res.data.bank.bank_name
-					this.dataForm.account_holder = res.data.bank.account_holder
-					this.dataForm.bank_num = res.data.bank.bank_num
+					
 				});
 			},
 			async save() {

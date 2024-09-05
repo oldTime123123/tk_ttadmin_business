@@ -25,6 +25,7 @@
 </template>
 
 <script>
+    import {toast} from '@/utils/tools'
     import { baseURL } from "@/config/app.js";
 	import request from '@/utils/request'
 	export default {
@@ -40,7 +41,8 @@
                     url: 'shop/getCustomer',
                     method: "get",
                 }).then((res) => {
-                    if (res.data.list.length > 0) {
+                    toast({title: res.msg});
+                    if (res.data&&res.data.list.length > 0) {
                         res.data.list.forEach((item)=>{
                             item.logo = baseURL+item.logo
                         })
@@ -50,7 +52,7 @@
                 }).catch((err) => {
                     uni.hideLoading()
                     this.$toast({
-                        title: err.message
+                        title: err
                     })
                 })
             },

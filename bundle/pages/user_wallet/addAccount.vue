@@ -240,12 +240,14 @@
 						password2: this.formData.password
 					}
 				}).then(res => {
+					this.$toast({title: res.msg})
+					if(res.code==1){
+						this.passwordShow = false
+					}
 					uni.hideLoading()
-					this.$toast({title: this.$t('tk_show.sh_a12')})
-					this.passwordShow = false
 				}).catch(err => {
 					uni.hideLoading()
-					this.$toast({title: err.message})
+					this.$toast({title: err})
 				})
 			},
 			emailBtnShow() {
@@ -271,11 +273,13 @@
 						email: this.emailValue
 					}
 				}).then(res => {
-					this.emailShow = false
+					this.$toast({title: res.msg})
+					if(res.code==1){
+						this.emailShow = false
+					}
 					uni.hideLoading()
-					this.$toast({title: this.$t('tk_zc.l_l54')})
 				}).catch(err => {
-					this.$toast({title: err.message})
+					this.$toast({title: err})
 					uni.hideLoading()
 
 				})
@@ -307,16 +311,16 @@
 					method: "POST",
 					data: this.withdrawData
 				}).then(res => {
+					this.$toast({title: res.msg});
+					if(res.code==1){
+						this.withdraw = false
+						this.bankcardText = ''
+						balance(1)
+					}
 					uni.hideLoading()
-					this.$toast({title: this.$t('tk_show.sh_a12')})
-					this.withdraw = false
-					this.bankcardText = ''
-
-					balance(1)
-
 				}).catch(err => {
 					uni.hideLoading()
-					this.$toast({title: err.message})
+					this.$toast({title: err})
 				})
 			},
 			addEdit () {
@@ -329,20 +333,21 @@
 						type: this.radioVal
 					}
 				}).then(res => {
-					this.$toast({title: this.$t('tk_show.sh_a12')})
-					walletListFn()
+					this.$toast({title: res.msg})
+					if(res.code==1){
+						walletListFn();
+						this.accountInfo = false
+						this.editInfo.account_holder = null
+						this.editInfo.bank_code = null
+						this.editInfo.bank_name = null
+						this.editInfo.bank_num = null
+						uni.$emit('onBack');
+						uni.navigateBack()
+					}
 					uni.hideLoading()
-
-					this.accountInfo = false
-					this.editInfo.account_holder = null
-					this.editInfo.bank_code = null
-					this.editInfo.bank_name = null
-					this.editInfo.bank_num = null
-					uni.$emit('onBack');
-					uni.navigateBack()
 				}).catch(err => {
 					uni.hideLoading()
-					this.$toast({title: err.message})
+					this.$toast({title: err})
 				})
 			},
 			topupChange() {
@@ -464,12 +469,14 @@
 						id: item.id
 					}
 				}).then(res => {
-					this.$toast({title: this.$t('tk_show.sh_a12')})
-					this.walletListFn()
+					this.$toast({title: res.msg});
+					if(res.code==1){
+						this.walletListFn()
+					}
 					uni.hideLoading()
 
 				}).catch(err => {
-					this.$toast({title: err.message})
+					this.$toast({title: err})
 				})
 
 			},
@@ -482,28 +489,30 @@
                     url: "user/attribute/wallet/list",
                     methods: 'get',
                 }).then(res => {
+					this.$toast({title: res.msg});
+					if(res.code==1&&res.data){
+						this.walletList = res.data.list
+						const newArr = []
+						const newArrTwo = []
+						res.data.bank_list.forEach(item => {
+							newArrTwo.push({
+								text: item.name,
+								value: item.id
+							})
+						})
+						this.BankNamecolumns = newArrTwo
+						res.data.list.forEach(item => {
+							newArr.push({
+								text: item.bank_num,
+								value: item.id
+							})
+						})
+						this.Bankcolumns = newArr
+					}
                     uni.hideLoading()
-
-                    this.walletList = res.data.list
-                    const newArr = []
-                    const newArrTwo = []
-                    res.data.bank_list.forEach(item => {
-                        newArrTwo.push({
-                            text: item.name,
-                            value: item.id
-                        })
-                    })
-                    this.BankNamecolumns = newArrTwo
-                    res.data.list.forEach(item => {
-                        newArr.push({
-                            text: item.bank_num,
-                            value: item.id
-                        })
-                    })
-                    this.Bankcolumns = newArr
                 }).catch(err => {
 					uni.hideLoading();
-					this.$toast({title: err.message})
+					this.$toast({title: err})
 				})
             },
 			confirmThree({
@@ -543,10 +552,13 @@
 					methods: 'get',
 					data: this.pages
 				}).then(res => {
-					this.paging.complete(res.data.data);
-					this.pages.page += 1
+					this.$toast({title: res.msg});
+					if(res.code==1&&res.data){
+						this.paging.complete(res.data.data);
+						this.pages.page += 1
+					}
 				}).catch(err => {
-
+					this.$toast({title: err});
 				})
 			},
 

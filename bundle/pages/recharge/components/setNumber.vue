@@ -206,23 +206,26 @@
 						type: id
 					}
 				}).then(res => {
-					this.pageData = res.data
-					if (res.data.order) {
-						this.two_submit = false
-						this.rechargeNumber = res.data.order.amount
-						this.qiLimg = res.data.order.cert
-						this.cert = res.data.order.cert
-						uni.hideLoading()
+					this.$toast({title: res.msg})
+					if(res.code==1){
+						this.pageData = res.data
+						if (res.data.order) {
+							this.two_submit = false
+							this.rechargeNumber = res.data.order.amount
+							this.qiLimg = res.data.order.cert
+							this.cert = res.data.order.cert
+							uni.hideLoading()
 
 
-					} else {
-						this.two_submit = true;
-						this.rechargeNumber = "";
-						this.rate = res.data.rate;
-						uni.hideLoading()
+						} else {
+							this.two_submit = true;
+							this.rechargeNumber = "";
+							this.rate = res.data.rate;
+							uni.hideLoading()
 
+						}
+						this.changeInfo = true
 					}
-					this.changeInfo = true
 					uni.hideLoading()
 				}).catch(err => {
 
@@ -261,19 +264,24 @@
 						cert: this.cert
 					}
 				}).then(res => {
-					this.$toast({title: this.$t('bus_ord.od_a30')})
-					setTimeout(() => {
-						history.back()
-					}, 1000);
+					this.$toast({title: res.msg});
+					if(res.code==1){
+						setTimeout(() => {
+							history.back()
+						}, 1000);
+					}
 				}).catch(err => {
 					this.$toast({
-						title: err.message
+						title: err
 					})
 				})
 				
 			},
 			copy(content) {
 				copy(content);
+				uni.showToast({
+                    title: this.$t('tk_ck.a_c4')
+                })
 			},
 			back() {
 				history.back()
@@ -283,18 +291,17 @@
 					url: 'shop/productWay',
 					methods: 'get',
 				}).then(res => {
-					// currencyName.value = res.recharge_type[0].name
-					// currencyPact.value = res.recharge_type[0].pact
-					// currencyType.value = res.recharge_type[0].type
-					const currencyList = []
-					res.data.recharge_type.forEach((item, index) => {
-						if (!currencyList.includes(item.currency)) {
-							currencyList.push(item.currency)
-						}
-					})
-					this.codeList = currencyList
-					this.productWayList = res.data.recharge_type
-
+					this.$toast({title: res.msg});
+					if(res.code==1&&res.data){
+						const currencyList = [];
+						res.data.recharge_type.forEach((item, index) => {
+							if (!currencyList.includes(item.currency)) {
+								currencyList.push(item.currency)
+							}
+						})
+						this.codeList = currencyList
+						this.productWayList = res.data.recharge_type
+					}
 				}).catch(err => {
 
 				})

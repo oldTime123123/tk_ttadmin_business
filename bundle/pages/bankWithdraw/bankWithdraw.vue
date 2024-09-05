@@ -151,14 +151,13 @@
 						amount: this.inputNum
 					}
 				}).then(res => {
-					this.$toast({
-						title: 'success'
-					})
-					history.back()
-					// this.emailValue = res.email
+					this.$toast({title: res.msg})
+					if(res.code==1){
+						history.back()
+					}
 				}).catch(err => {
 					this.$toast({
-						title: err.message
+						title: err
 					})
 				})
 			},
@@ -175,11 +174,13 @@
 					url: "shop/getwalletInfo",
 					methods: 'get',
 				}).then(res => {
+					this.$toast({
+						title: res.msg
+					})
 					this.userInfo = res.data
-					// this.emailValue = res.email
 				}).catch(err => {
 					this.$toast({
-						title: err.message
+						title: err
 					})
 				})
 
@@ -188,7 +189,9 @@
 					methods: 'get',
 
 				}).then((res) => {
-					console.log(res)
+					this.$toast({
+						title: res.msg
+					})
 					this.pageData = res.data
 
 				});
@@ -201,7 +204,10 @@
 					url: "index/bankConfig",
 					methods: 'get',
 				}).then(res => {
-					if (res.data.config) {
+					this.$toast({
+						title: res.msg
+					})
+					if (res.data&&res.data.config) {
 						this.min = res.data.config.withdrawal_bank_min;
 						this.max = res.data.config.withdrawal_bank_max;
 					}
@@ -209,7 +215,7 @@
 				}).catch(err => {
 					uni.hideLoading()
 					this.$toast({
-						title: err.message
+						title: err
 					})
 				})
 			}

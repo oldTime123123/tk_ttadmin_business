@@ -61,6 +61,7 @@
 </template>
 
 <script>
+	import {toast} from '@/utils/tools'
 	import request from '@/utils/request'
     export default {
         data() {
@@ -97,11 +98,13 @@
 					method: "POST",
 					data: this.pages
 				}).then(res => {
-					if(res.data.lists){
-						this.$refs.paging.complete(res.data.lists);
-						this.pages.page += 1
+					toast({title: res.msg});
+					if(res.code==1){
+						if(res.data.lists){
+							this.$refs.paging.complete(res.data.lists);
+							this.pages.page += 1
+						}
 					}
-					
 				})
 			}
         }

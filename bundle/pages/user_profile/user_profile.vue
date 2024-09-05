@@ -41,6 +41,7 @@
 </template>
 
 <script>
+    import {toast} from '@/utils/tools'
     import {
         apiLogout,
         apiSetPassword
@@ -78,12 +79,15 @@
             logout() {
                 //  退出登录
                 apiLogout().then(res => {
-                    this.$store.commit("logout");
-                    setTimeout(() => {
-                        uni.reLaunch({
-                            url: "/pages/login/login"
-                        })
-                    }, 1000)
+                    toast({title: res.msg});
+                    if(res.code==1){
+                        this.$store.commit("logout");
+                        setTimeout(() => {
+                            uni.reLaunch({
+                                url: "/pages/login/login"
+                            })
+                        }, 1000)
+                    }
                 })
             }
         }

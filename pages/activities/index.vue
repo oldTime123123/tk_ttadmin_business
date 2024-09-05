@@ -33,6 +33,7 @@
 </template>
 
 <script>
+	import {toast} from '@/utils/tools'
 	import request from '@/utils/request'
 
 	export default {
@@ -53,9 +54,9 @@
 					url: 'shop/vipList',
 					methods: 'get',
 				}).then((res) => {
+					toast({title: res.msg});
+					this.vipList = res.data;
 					uni.hideLoading()
-					console.log(res)
-					this.vipList = res.data
 				})
 			}
 

@@ -72,7 +72,8 @@
 					url: 'shop/wallet',
 					methods: 'get',
 				}).then((res) => {
-					this.tableList = res.data.lists || [];
+					this.$toast({title: res.msg});
+					this.tableList = res.data ? res.data.lists : [];
 					uni.hideLoading()
 				});
 			}

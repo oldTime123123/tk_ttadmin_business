@@ -90,6 +90,7 @@
         methods: {
             async getWithdrawInfoFunc() {
                 const res = await apiGetWithdrawInfo();
+                this.$toast({title: res.msg})
                 this.withdrawInfo = res.data;
             },
 
@@ -108,14 +109,12 @@
                 const res = await apiWithdrawApply({
                     ...params
                 })
-
-                this.$refs.uToast.show({
-                    title: '提现成功',
-                    type: 'success',
-                })
-                setTimeout(() => {
-                    this.$Router.back()
-                }, 1000)
+                this.$toast({title: res.msg})
+                if(res.code==1){
+                    setTimeout(() => {
+                        this.$Router.back()
+                    }, 1000)
+                }
             },
 
             goPage(url) {

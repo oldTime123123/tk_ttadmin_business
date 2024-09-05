@@ -108,15 +108,14 @@
 						id: this.content.id
 					}
 				}).then((res)=>{
+					this.$toast({title: res.msg})
 					if(res.code==1){
 						this.$emit('unpdateList',this.Gotype);
-					}else{
-						this.$toast({title: err.msg})
 					}
 					uni.hideLoading()
 				}).catch((err) => {
 					uni.hideLoading()
-					this.$toast({title: err.msg})
+					this.$toast({title: err})
 				})
 			},
 			//单个添加到橱窗
@@ -129,15 +128,14 @@
 						goodsId: this.content.id
 					}
 				}).then((res)=>{
+					this.$toast({title: res.msg})
 					if(res.code==1){
 						this.$emit('unpdateList',this.Gotype);
-					}else{
-						this.$toast({title: err.msg})
 					}
 					uni.hideLoading()
 				}).catch((err) => {
 					uni.hideLoading()
-					this.$toast({title: err.msg})
+					this.$toast({title: err})
 				})
 			}
 		}

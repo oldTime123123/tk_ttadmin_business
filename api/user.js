@@ -2,7 +2,7 @@
  * @Author: chenpn chenpn699@gmail.com
  * @Date: 2024-08-16 22:17:23
  * @LastEditors: chenpn chenpn699@gmail.com
- * @LastEditTime: 2024-09-03 14:20:59
+ * @LastEditTime: 2024-09-05 15:15:40
  * @FilePath: \web_business\api\user.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -93,4 +93,7 @@ export const getLangJson = (params) => request.get('Account/setLang')
 
 //国家区号
 export const getCountryList = (params) => request.get('Account/getCountryList')
+
+//注册方式
+export const getRegisterType = (params) => request.post('Account/registerType', params)
 

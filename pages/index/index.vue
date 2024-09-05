@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2024-08-05 10:58:11
  * @LastEditors: chenpn chenpn699@gmail.com
- * @LastEditTime: 2024-09-04 14:46:14
+ * @LastEditTime: 2024-09-05 16:56:27
  * @FilePath: \1\web_business\pages\index\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -269,49 +269,52 @@
 			 * 获取图表信息
 			 */
 			async getPageInfo() {
-				uni.showLoading()
-				const res = await apiIndex()
-				//头部总列表数据
-				this.totallData[0].val = res.data.order_amount;
-				this.totallData[1].val = res.data.shop_wallet;
-				this.totallData[2].val = res.data.all_order_profit;
-				this.totallData[3].val = res.data.pre_order_profit;
-				//今日数据
-				this.todayData[0].val = res.data.shop_user;
-				this.todayData[1].val = res.data.day_follow;
-				this.todayData[2].val = res.data.day_order_num;
-				this.todayData[3].val = res.data.day_order_profit;
-				//总订单数量
-				this.orderToday[0].val = res.data.order_all_num;
-				this.orderToday[1].val = res.data.order_doing_num;
-				this.orderToday[2].val = res.data.order_finish_num;
-				this.orderToday[3].val = res.data.order_cancel_num;
-				this.orderToday[4].val = res.data.order_refund_num;
-				const turnover = {
-					categories: res.data.dates,
-					series: [{
-						"name": this.$t('bus_Statistics.sta6'),
-						data: res.data.echarts_order_amount
-					}]
+				uni.showLoading();
+				const res = await apiIndex();
+				this.$toast({title: res.msg});
+				if(res.code==1){
+					//头部总列表数据
+					this.totallData[0].val = res.data.order_amount;
+					this.totallData[1].val = res.data.shop_wallet;
+					this.totallData[2].val = res.data.all_order_profit;
+					this.totallData[3].val = res.data.pre_order_profit;
+					//今日数据
+					this.todayData[0].val = res.data.shop_user;
+					this.todayData[1].val = res.data.day_follow;
+					this.todayData[2].val = res.data.day_order_num;
+					this.todayData[3].val = res.data.day_order_profit;
+					//总订单数量
+					this.orderToday[0].val = res.data.order_all_num;
+					this.orderToday[1].val = res.data.order_doing_num;
+					this.orderToday[2].val = res.data.order_finish_num;
+					this.orderToday[3].val = res.data.order_cancel_num;
+					this.orderToday[4].val = res.data.order_refund_num;
+					const turnover = {
+						categories: res.data.dates,
+						series: [{
+							"name": this.$t('bus_Statistics.sta6'),
+							data: res.data.echarts_order_amount
+						}]
+					}
+					const orderNum = {
+						categories: res.data.dates,
+						series: [{
+							"name": this.$t('bus_Statistics.sta5'),
+							data: res.data.echarts_order_count
+						}]
+					}
+					const visit = {
+						categories: res.data.dates,
+						series: [{
+							"name": this.$t('bus_Statistics.sta12'),
+							data: res.data.echarts_user_visit
+						}]
+					}
+					this.turnoverData = turnover
+					this.visitData = visit
+					this.orderNumData = orderNum
+					this.pagesData = res.data;
 				}
-				const orderNum = {
-					categories: res.data.dates,
-					series: [{
-						"name": this.$t('bus_Statistics.sta5'),
-						data: res.data.echarts_order_count
-					}]
-				}
-				const visit = {
-					categories: res.data.dates,
-					series: [{
-						"name": this.$t('bus_Statistics.sta12'),
-						data: res.data.echarts_user_visit
-					}]
-				}
-				this.turnoverData = turnover
-				this.visitData = visit
-				this.orderNumData = orderNum
-				this.pagesData = res.data;
 				uni.hideLoading()
 			},
 			showTime() {
@@ -348,11 +351,12 @@
 					methods: 'get',
 
 				}).then(res => {
-					this.currency = res.data.currency;
-					uni.setStorageSync('currency', res.data.currency)
+					this.$toast({title: res.msg});
+					if(res.code==1){
+						this.currency = res.data.currency;
+						uni.setStorageSync('currency', res.data.currency)
+					}
 				})
-			} else {
-				this.currency = uni.getStorageSync('currency');
 			}
 			this.downCallback();
 			uni.setTabBarItem({

@@ -322,7 +322,7 @@
         border-bottom: 1px solid #F4F4F4;
     }
     .nav .text{
-        font-size: 1.125rem;
+        font-size: 32rpx;
         color: #171418;
     }
     .card {
@@ -332,7 +332,7 @@
         background-color: $-color-white;
 
         view:last-child {
-            font-size: 44rpx;
+            font-size: 32rpx;
             font-weight: 500;
         }
 
@@ -359,7 +359,7 @@
         width: 100%;
         justify-content: space-between;
         color: #817C81;
-        font-size: 30rpx;
+        font-size: 32rpx;
         font-weight: 400;
         overflow-x: auto;
 
@@ -397,7 +397,7 @@
     .menu_num {
         text-align: center;
         color: #2979ff;
-        font-size: 32px;
+        font-size: 32rpx;
         font-weight: 600;
         line-height: 32px;
     }
@@ -419,12 +419,12 @@
 
             view:first-child {
                 color: $-color-muted;
-                font-size: 24rpx;
+                font-size: 32rpx;
             }
 
             view:last-child {
                 color: $-color-normal;
-                font-size: 44rpx;
+                font-size: 32rpx;
                 font-weight: 500;
                 margin-top: 6rpx;
                 height: 50px;

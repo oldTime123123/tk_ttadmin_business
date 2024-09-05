@@ -43,6 +43,7 @@
 </template>
 
 <script>
+	import {toast} from '@/utils/tools'
     import {
         apiOrderDelivery,
         apiOrderExpress
@@ -117,7 +118,10 @@
             
             async getExpressFunc(id) {
                 const res = await apiOrderExpress({id})
-                this.express = res.data;
+                toast({ title: res.msg});
+                if(res.data){
+                    this.express = res.data;
+                }
             }
         }
     }

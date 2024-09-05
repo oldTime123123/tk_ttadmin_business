@@ -244,11 +244,12 @@
 						amount: this.inputNum
 					}
 				}).then(res => {
-					this.$toast({title: this.$t('bus_ord.od_a30')})
-					setTimeout(() => {
-						history.back()
-					}, 1000);
-					// this.emailValue = res.email
+					this.$toast({title: res.msg});
+					if(res.code==1){
+						setTimeout(() => {
+							history.back()
+						}, 1000);
+					}
 				}).catch(err => {
 					this.$toast({
 						title: err.message
@@ -265,8 +266,10 @@
 					url: "shop/getwalletInfo",
 					methods: 'get',
 				}).then(res => {
-					this.pageData = res.data
-					// this.emailValue = res.email
+					this.$toast({title: res.msg});
+					if(res.code==1&&res.data){
+						this.pageData = res.data
+					}
 				}).catch(err => {
 					this.$toast({
 						title: err.message
@@ -329,16 +332,19 @@
 						type: id
 					}
 				}).then(res => {
-					this.watchList = res.data
-					if (res.data.user_link && res.data.user_link.length > 0) {
-						res.data.user_link.forEach(m => {
-							this.codeList3.push(m.address)
-						})
-					} 
-					if(this.codeList3.length>0){
-						this.isShowGoAddress = false
-					}else{
-						this.isShowGoAddress = true;
+					this.$toast({title: res.msg});
+					if(res.code==1&&res.data){
+						this.watchList = res.data
+						if (res.data.user_link && res.data.user_link.length > 0) {
+							res.data.user_link.forEach(m => {
+								this.codeList3.push(m.address)
+							})
+						} 
+						if(this.codeList3.length>0){
+							this.isShowGoAddress = false
+						}else{
+							this.isShowGoAddress = true;
+						}
 					}
 					uni.hideLoading()
 				}).catch(err => {
@@ -350,16 +356,19 @@
 					url: 'shop/productWay',
 					methods: 'get',
 				}).then(res => {
-					const currencyList = []
-					res.data.withdraw_list.forEach((item, index) => {
-						if (!currencyList.includes(item.currency)) {
-							currencyList.push(item.currency)
-						}
-					})
-					this.codeList = currencyList
-					this.productWayList = res.data.withdraw_list
+					this.$toast({title: res.msg});
+					if(res.code==1&&res.data){
+						const currencyList = []
+						res.data.withdraw_list.forEach((item, index) => {
+							if (!currencyList.includes(item.currency)) {
+								currencyList.push(item.currency)
+							}
+						})
+						this.codeList = currencyList
+						this.productWayList = res.data.withdraw_list
+					}
 				}).catch(err => {
-
+					this.$toast({title: err});
 				})
 			},
 			back() {

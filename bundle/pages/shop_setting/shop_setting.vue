@@ -173,7 +173,7 @@
         onShow() {
             this.getUser().then(res => {
                 // 深度克隆防止vux的数据地址保存连接
-                this.info = JSON.parse(JSON.stringify(res.data));
+                res.data?this.info = JSON.parse(JSON.stringify(res.data)):'';
             })
         },
 
@@ -244,9 +244,13 @@
 					data: {
 						logo: e.data.uri
 					}
-				}).then(res => {}).catch(err => {
+				}).then(res => {
 					this.$toast({
-						title: err.message
+						title: res.msg
+					})
+				}).catch(err => {
+					this.$toast({
+						title: err
 					})
 				})
 

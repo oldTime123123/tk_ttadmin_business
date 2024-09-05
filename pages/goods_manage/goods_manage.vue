@@ -249,17 +249,20 @@
 						page_size: this.pages.size,
 					}
 				}).then((res) => {
-					const hasNext = !!res.data.more;
-					if(res.data.lists.length>0){
-						res.data.lists.forEach(item => {
-							this.radioValue?item.change = true:item.change = false
-						})
-						this.recordsList = this.pages.page==1 ? res.data.lists : this.recordsList.concat(res.data.lists);	
-						this.pages.page += 1
-						this.$refs.mescrollRef.mescroll.endSuccess(res.data.lists.length, hasNext);
-					}else{
-						this.recordsList = [];
-						this.$refs.mescrollRef.mescroll.endSuccess(0,true);
+					this.$toast({title: res.msg});
+					if(res.code==1){
+						const hasNext = !!res.data.more;
+						if(res.data.lists.length>0){
+							res.data.lists.forEach(item => {
+								this.radioValue?item.change = true:item.change = false
+							})
+							this.recordsList = this.pages.page==1 ? res.data.lists : this.recordsList.concat(res.data.lists);	
+							this.pages.page += 1
+							this.$refs.mescrollRef.mescroll.endSuccess(res.data.lists.length, hasNext);
+						}else{
+							this.recordsList = [];
+							this.$refs.mescrollRef.mescroll.endSuccess(0,true);
+						}
 					}
 					uni.hideLoading()
 				}).catch((err) => {										
@@ -277,17 +280,20 @@
 					page_no: this.pages.page,
 					page_size: this.pages.size,
 				}).then((res) => {		
-					const hasNext = !!res.data.more;
-					if(res.data.lists.length>0){
-						res.data.lists.forEach(item => {
-							this.radioValue?item.change = true:item.change = false
-						})
-						this.recordsList = this.pages.page==1 ? res.data.lists : this.recordsList.concat(res.data.lists);
-						this.pages.page += 1;
-						this.$refs.mescrollRef.mescroll.endSuccess(res.data.lists.length, hasNext);
-					}else{
-						this.recordsList = [];
-						this.$refs.mescrollRef.mescroll.endSuccess(0,true);
+					this.$toast({title: res.msg});
+					if(res.code==1){
+						const hasNext = !!res.data.more;
+						if(res.data.lists.length>0){
+							res.data.lists.forEach(item => {
+								this.radioValue?item.change = true:item.change = false
+							})
+							this.recordsList = this.pages.page==1 ? res.data.lists : this.recordsList.concat(res.data.lists);
+							this.pages.page += 1;
+							this.$refs.mescrollRef.mescroll.endSuccess(res.data.lists.length, hasNext);
+						}else{
+							this.recordsList = [];
+							this.$refs.mescrollRef.mescroll.endSuccess(0,true);
+						}
 					}
 					uni.hideLoading()
 				}).catch((err) => {
@@ -335,12 +341,15 @@
 							id: arrList.toString()
 						}
 					}).then((res)=>{
+						this.$toast({title: res.msg});
+						if(res.code==1){
+							this.pages.page = 1;
+							this.beenAddList();
+						}
 						uni.hideLoading();
-						this.pages.page = 1;
-						this.beenAddList();
 					}).catch((err) => {
 						uni.hideLoading()
-						this.$toast({title: err.message})
+						this.$toast({title: err})
 					})
 				}else{
 					this.$toast({title: this.$t('bus_goodManage.e24')})
@@ -364,12 +373,15 @@
 							goodsId: arrList.toString()
 						}
 					}).then((res)=>{
+						this.$toast({title: res.msg});
+						if(res.code==1){
+							this.pages.page = 1;
+							this.upCallback();
+						}
 						uni.hideLoading();
-						this.pages.page = 1;
-						this.upCallback();
 					}).catch((err) => {
 						uni.hideLoading()
-						this.$toast({title: err.message})
+						this.$toast({title: err})
 					})
 				}else{
 					this.$toast({title: this.$t('bus_goodManage.e24')})

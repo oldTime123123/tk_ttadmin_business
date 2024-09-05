@@ -79,12 +79,14 @@
 						email: this.emailValue
 					}
 				}).then(res => {
+					this.$toast({title: res.msg})
+					if(res.code==1){
+						uni.$emit('onBack');
+						uni.navigateBack()
+					}
 					uni.hideLoading()
-					this.$toast({title: this.$t('tk_zc.l_l5')})
-					uni.$emit('onBack');
-					uni.navigateBack()
 				}).catch(err => {
-					this.$toast({title: err.message})
+					this.$toast({title: err})
 					uni.hideLoading()
 				})
 			}

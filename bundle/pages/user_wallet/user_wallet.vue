@@ -267,13 +267,14 @@
 					url: "shop/rechargeWithdrawType",
 					methods: 'get',
 				}).then(res => {
-					// this.walletData = res
-					this.rechangeType = res.data.recharge_type
-					this.withdrawType = res.data.withdraw_type
-					// this.emailValue = res.email
+					this.$toast({title: res.msg})
+					if(res.code==1&&res.data){
+						this.rechangeType = res.data.recharge_type
+						this.withdrawType = res.data.withdraw_type
+					}
 				}).catch(err => {
 					this.$toast({
-						title: err.message
+						title: err
 					})
 				})
 			},
@@ -309,12 +310,17 @@
 							url: "index/bankConfig",
 							methods: 'get',
 						}).then(res => {
-							if(res.data&&res.data.config.withdrawal_way == 'kefu'){
-								uni.hideLoading()
-								window.location.href = res.data.config.kefu_url
-							}else{
-								uni.hideLoading()
-								this.navigateToPage('/bundle/pages/bankWithdraw/bankWithdraw')
+							this.$toast({
+								title: res.msg
+							})
+							if(res.code==1){
+								if(res.data&&res.data.config.withdrawal_way == 'kefu'){
+									uni.hideLoading()
+									window.location.href = res.data.config.kefu_url
+								}else{
+									uni.hideLoading()
+									this.navigateToPage('/bundle/pages/bankWithdraw/bankWithdraw')
+								}
 							}
 						}).catch(err => {
 							uni.hideLoading()

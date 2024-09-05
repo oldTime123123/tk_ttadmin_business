@@ -240,7 +240,7 @@
                         password: this.password,
                     }
                 }).then(res => {
-                    this.$toast({title: 'Loan submission successful'})
+                    this.$toast({title: res.msg})
                 })
             },
             Agree(num){

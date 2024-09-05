@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2024-08-09 09:23:59
  * @LastEditors: chenpn chenpn699@gmail.com
- * @LastEditTime: 2024-09-03 15:22:00
+ * @LastEditTime: 2024-09-05 18:08:12
  * @FilePath: \1\web_business\bundle\pages\mine\term.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -36,13 +36,11 @@
                     {{ $t('bus_term.bt4') }}
                 </text>
             </view>
-            <view class="mode1">
-                <text>
-                    {{ $t('bus_term.bt5') }}: {{  }}
-                </text>
-                <text @click="copy()">
-                    {{ $t('bus_term.bt4') }}
-                </text>
+            <view class="links">
+                <view @click="goRegist" class="column">
+                    {{ $t('bus_term.bt5') }}: 
+                    <text class="blue">{{ goRegAddress }}</text>
+                </view>
             </view>
             <view class="tabs">
                 <u-row class="tabs-row">
@@ -87,6 +85,7 @@
 </template>
 
 <script>
+    import {toast} from '@/utils/tools'
 	import request from '@/utils/request'
     import { copy } from "@/utils/tools.js";
     export default{
@@ -95,7 +94,8 @@
                 termInfo: {},
                 rebateList: [],
                 tabId:0,
-                currency: ''
+                currency: '',
+                goRegAddress: ''
             }
         },
         mounted() {
@@ -105,6 +105,9 @@
             this.getShopRebate()
         },
         methods: {
+            goRegist(){
+                this.copy(this.goRegAddress)
+            },
             back(){
                 uni.redirectTo({
 					url: '/pages/user/user'
@@ -117,12 +120,15 @@
                     url: 'shop/getShopTeamInfo',
                     method: "get",
                 }).then((res)=>{
-                    this.termInfo = res.data;
-                    
-                    uni.hideLoading()
+                    toast({title: res.msg});
+                    if(res.data){
+                        this.termInfo = res.data;
+                        let link = this.termInfo.invite_code ? window.location.href.split('#')[0] + `#/pages/register/register?invite_code=${this.termInfo.invite_code}`:window.location.href.split('#')[0] + '#/pages/register/register'
+                        this.goRegAddress =  link
+                    }
                 }).catch((err) => {
                     uni.hideLoading()
-                    this.$toast({title: err.message})
+                    this.$toast({title: err})
                 })
             },
             //返佣列表
@@ -133,7 +139,8 @@
                     url: url,
                     method: "get",
                 }).then((res)=>{
-                    if(res.data.list.length>0){
+                    toast({title: res.msg});
+                    if(res.data&&res.data.list.length>0){
                         this.rebateList = res.data.list
                     }else{
                         this.rebateList = []
@@ -141,7 +148,7 @@
                     uni.hideLoading()
                 }).catch((err) => {
                     uni.hideLoading()
-                    this.$toast({title: err.message})
+                    this.$toast({title: err})
                 })
             },
             tabClick(index){
@@ -150,6 +157,9 @@
             },
             copy(content) {
                 copy(content);
+                uni.showToast({
+                    title: this.$t('tk_ck.a_c4')
+                })
             },
         },
     }
@@ -214,8 +224,28 @@
         justify-content: space-between;
         align-items: center;
     }
+    .links{
+        margin-top: 25px;
+        padding: 0 15px;
+        border-radius: 15px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+    }
+    .column{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .blue{
+        width: 100%;
+        padding: 20rpx 0;
+        color: #40AFFA;
+        overflow-wrap: break-word;
+    }
     .tabs{
-        margin-top: 20px;
+        margin-top: 30px;
         height: 60px;
         padding: 0 10px;
         border-radius: 15px;

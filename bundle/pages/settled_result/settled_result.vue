@@ -174,6 +174,9 @@
 			},
 			onCopy(text) {
 				copy(text)
+				uni.showToast({
+                    title: this.$t('tk_ck.a_c4')
+                })
 			}
 		},
 

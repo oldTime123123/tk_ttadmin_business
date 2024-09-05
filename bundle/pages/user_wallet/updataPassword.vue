@@ -198,12 +198,14 @@
 						...this.formData
 					}
 				}).then(res => {
+					this.$toast({title: res.msg})
+					if(res.code==1){
+						uni.navigateBack()
+					}
 					uni.hideLoading()
-					this.$toast({title: this.$t('tk_show.sh_a12')})
-					uni.navigateBack()
 				}).catch(err => {
 					uni.hideLoading()
-					this.$toast({title: err.message})
+					this.$toast({title: err})
 				})
 			},
 			emailBtnShow() {

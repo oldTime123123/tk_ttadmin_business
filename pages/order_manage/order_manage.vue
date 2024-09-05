@@ -471,21 +471,19 @@
 						password: this.password
 					}
 				}).then(res => {
-					this.passwordShow = false
-					this.password = ''
-					this.pages.status = 1
-					this.pages.page = 1
-					this.shangpId = []
-					this.getData()
-					// this.orderNum()
-					this.$toast({title: this.$t('bus_ord.od_a30')})
-					// yhj_list.value = []
-					// selectIds.value = []
-					// num_sum.value = 0
+					this.$toast({title: res.msg});
+					if(res.code==1){
+						this.passwordShow = false
+						this.password = ''
+						this.pages.status = 1
+						this.pages.page = 1
+						this.shangpId = []
+						this.getData()
+					}
 					uni.hideLoading()
 				}).catch(err => {
 					uni.hideLoading()
-					this.$toast({title: err.message})
+					this.$toast({title: err})
 				})
 			},
 			delivery(item)  {
@@ -502,7 +500,8 @@
 						oid: item.id,
 					}
 				}).then((res)=>{
-					if(res.data){
+					this.$toast({title: res.msg});
+					if(res.code==1&&res.data){
 						this.deliveryData = res.data;
 						this.stepCurrent = res.data.length;
 						this.withdraw = true
@@ -529,13 +528,16 @@
 						page_size: this.pages.size,
 					}
 				}).then((res)=>{
-					if(res.data.list){
-						res.data.list.forEach(item => {
-							item.change = false
-						})			
-						this.count = res.data.count;
-						this.$refs.paging.complete(res.data.list);
-						this.pages.page += 1
+					this.$toast({title: res.msg});
+					if(res.code==1){
+						if(res.data.list){
+							res.data.list.forEach(item => {
+								item.change = false
+							})			
+							this.count = res.data.count;
+							this.$refs.paging.complete(res.data.list);
+							this.pages.page += 1
+						}
 					}
 					uni.hideLoading()
 				}).catch((err) => {
@@ -550,8 +552,11 @@
 					methods: 'get',
 
 				}).then(res => {
-					this.numTotal = res.data.pay+res.data.delivery+res.data.receiving+res.data.finish+res.data.close;
-					this.numList = res.data
+					this.$toast({title: res.msg});
+					if(res.code==1&&res.data){
+						this.numTotal = res.data.pay+res.data.delivery+res.data.receiving+res.data.finish+res.data.close;
+						this.numList = res.data
+					}
 					uni.hideLoading()
 				}).catch(err => {
 					uni.hideLoading()
@@ -567,17 +572,17 @@
 						data: data
 					}
 				}).then(res => {
-
-					uni.setStorageSync('token', res.data.accessToken)
-					uni.setStorageSync('userInfo', res.data.userInfo)
-					window.location.reload()
+					this.$toast({title: res.msg});
+					if(res.code==1&&res.data){
+						uni.setStorageSync('token', res.data.accessToken)
+						uni.setStorageSync('userInfo', res.data.userInfo)
+						window.location.reload()
+					}
 					uni.hideLoading()
-
-
 				}).catch(err => {
 					uni.hideLoading()
 					uni.showToast({
-						title: err.message,
+						title: err,
 						icon: 'none'
 					})
 

@@ -199,6 +199,7 @@
 			},
 			async getCountryListfn() {
 				let res = await getCountryList()
+				this.$toast({title: res.msg});
 				if (res.code == 1) {
 					this.CountryList = res.data;
 					this.isShowMsg = res.data[0].is_sms;
@@ -277,7 +278,7 @@
 						this.loginHandle(res.data)
 					} else {
 						this.$toast({
-							title: this.$t(res.msg)
+							title: res.msg
 						})
 					}
 					uni.hideLoading();

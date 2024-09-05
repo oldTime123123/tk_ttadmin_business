@@ -107,16 +107,18 @@
 						...this.formData
 					}
 				}).then(res => {
-					this.showLoading.loading = false
-					this.$toast({title: this.$t('tk_in.i_s2')})
-					setTimeout(() => {
-						uni.navigateTo({
-							url: '/pages/tabbar/wallet'
-						})
-					}, 500)
+					this.showLoading.loading = false;
+					this.$toast({title: res.msg});
+					if(res.code==1){
+						setTimeout(() => {
+							uni.navigateTo({
+								url: '/pages/tabbar/wallet'
+							})
+						}, 500)
+					}
 				}).catch(err => {
 					this.showLoading.loading = false
-					this.$toast({title: err.message})
+					this.$toast({title: err})
 				})
 			},
 			getData(){
@@ -124,13 +126,16 @@
 					url: `finance/${this.recType}/recharge/index`,
 					methods: 'get'
 				}).then(res => {
-					if (!res.data.order) {
-						uni.switchTab({
-							url: '/pages/tabbar/index'
-						})
-						return false
+					this.$toast({title: res.msg});
+					if(res.code==1){
+						if (!res.data.order) {
+							uni.switchTab({
+								url: '/pages/tabbar/index'
+							})
+							return false
+						}
+						this.uploadHost = res.data.upload_host
 					}
-					this.uploadHost = res.data.upload_host
 
 					try {
 						this.formData.tx_id = res.data.order.tx_id

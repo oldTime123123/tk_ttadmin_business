@@ -36,6 +36,7 @@
 </template>
 
 <script>
+	import {toast} from '@/utils/tools'
     import {
         apiAddBank,
         apiEditBank,
@@ -71,34 +72,31 @@
                 const res = await apiAddBank({
                     ...this.form
                 })
-                this.$refs.uToast.show({
-                    title: '添加成功',
-                    type: 'success'
-                })
-                setTimeout(() => {
-                    uni.navigateBack()
-                }, 1000)
+                toast({title: res.msg});
+                if(res.code==1){
+                    setTimeout(() => {
+                        uni.navigateBack()
+                    }, 1000)
+                }
             },
             
             async editBankFunc() {
                 const res = await apiEditBank({
                     ...this.form
                 })
-                this.$refs.uToast.show({
-                    title: '修改成功',
-                    type: 'success'
-                })
-                setTimeout(() => {
-                    uni.navigateBack()
-                }, 1000)
+                toast({title: res.msg});
+                if(res.code==1){
+                    setTimeout(() => {
+                        uni.navigateBack()
+                    }, 1000)
+                }
             },
             
             async getBankFunc(id) {
                 const res = await apigetBankDetail({id: id})
-                
-                for (const key in res) {
-                    console.log(res[key])
-                    this.$set(this.form, key, res[key])
+                for (const key in res.data) {
+                    console.log(res.data[key])
+                    this.$set(this.form, key, res.data[key])
                 }
             }
         }

@@ -131,10 +131,13 @@
                         id: this.goods_id,
                         visit: 1,
                     }).then(res => {
-                        this.goodsInfo = res.data
-                        const hasComment = JSON.stringify(res.data.goods_comment) !== '[]'
-                        this.goodsComment = hasComment ? res.data.goods_comment : {}
-                        this.isGoodsCollect = !!res.data.is_collect
+                        this.$toast({title: res.msg});
+                        if(res.code==1&&res.data){
+                            this.goodsInfo = res.data
+                            const hasComment = JSON.stringify(res.data.goods_comment) !== '[]'
+                            this.goodsComment = hasComment ? res.data.goods_comment : {}
+                            this.isGoodsCollect = !!res.data.is_collect
+                        }
                     }).then(res1 => {
                         // #ifdef H5
                         // 设置分享

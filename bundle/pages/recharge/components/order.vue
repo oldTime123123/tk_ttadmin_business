@@ -358,12 +358,14 @@
 						order_no: this.pageData.order_no
 					}
 				}).then(res => {
-					this.$toast({title: this.$t('tk_wr.r_r13')})
-					uni.navigateTo({
-						url: '/bundle/pages/user_wallet/user_wallet'
-					})
+					this.$toast({title: res.msg})
+					if(res.code==1){
+						uni.navigateTo({
+							url: '/bundle/pages/user_wallet/user_wallet'
+						})
+					}
 				}).catch(err => {
-					this.$toast({title: err.message})
+					this.$toast({title: err})
 				})
 			},
 			changeTime(num){

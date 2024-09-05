@@ -13,10 +13,10 @@
 
 
 		<view class="flex mb20">
-			<view class="btns" @click="changeType(1)" :class="type==1?'changeTy':''">
+			<view v-if="isShowMobile" class="btns" @click="changeType(1)" :class="type==1?'changeTy':''">
 				{{this.$t('register.rg4')}}
 			</view>
-			<view class="btns" @click="changeType(2)" :class="type==2?'changeTy':''">
+			<view v-if="isShowEmail" class="btns" @click="changeType(2)" :class="type==2?'changeTy':''">
 				{{this.$t('register.rg5')}}
 			</view>
 
@@ -122,7 +122,7 @@
 			@cancel="showModel = false" confirm-color="#FF2C3C">
 			<view class="comfirm-box ">
 				<view> {{this.$t('register.rg19')}} </view>
-				<view class="flex row-center" style="flex-wrap: wrap;wrap;font-size: 28rpx;margin-top: 20rpx;">
+				<view class="flex row-center" style="flex-wrap: wrap;font-size: 28rpx;margin-top: 20rpx;">
 					<router-link data-theme="" to="/bundle/pages/server_explan/server_explan?type=0">
 						<view class="agreement">《{{this.$t('register.rg14')}}》</view>
 					</router-link>
@@ -164,6 +164,7 @@
 		mapGetters
 	} from "vuex";
 	import {
+		getRegisterType,
 		getCountryList
 	} from '@/api/user'
 	import Cache from '@/utils/cache'
@@ -199,12 +200,16 @@
 				invite_code: "",
 				loading: true,
 				type: 1,
-				email: ''
+				email: '',
+				isShowEmail: false,
+				isShowMobile: false,
 			};
 		},
-		onLoad() {
-			// console.log(this.appConfig)
-			this.getCountryListfn()
+		onLoad(option) {
+			if(option.invite_code){
+				this.invite_code = option.invite_code
+			}
+			this.getRegisterType()
 			setTimeout(() => {
 				this.loading = false
 
@@ -213,6 +218,24 @@
 		},
 		methods: {
 			...mapMutations(['login']),
+			getRegisterType(){
+				getRegisterType().then((res)=>{
+					toast({
+						title: res.msg
+					});
+					if(res.code==1){
+						this.isShowEmail = res.data.email;
+						this.isShowMobile = res.data.mobile;
+						if(this.isShowMobile){
+							this.getCountryListfn()
+						}
+					}
+				}).catch((err)=>{
+					toast({
+						title: err
+					});
+				})
+			},
 			codeChange(tip) {
 				this.codeTips = tip;
 			},
@@ -241,6 +264,7 @@
 			},
 			async getCountryListfn() {
 				let res = await getCountryList()
+				this.$toast({title: res.msg});
 				if (res.code == 1) {
 					this.CountryList = res.data;
 					this.isShowMsg = res.data[0].is_sms;
@@ -333,15 +357,11 @@
 				}
 				if (this.type == 1) {
 					register(data).then((res) => {
+						this.$toast({title: res.msg});
 						if (res.code == 1) {
 							this.loginHandle(res.data.user)
-							toast({
-								title: res.msg
-							});
 							// this.login(data)
 							//  跳转到登录页
-
-
 						}
 						uni.hideLoading();
 					}).catch(() => {
@@ -350,25 +370,17 @@
 				} else {
 
 					emailRegister(emailData).then((res) => {
+						this.$toast({title: res.msg});
 						if (res.code == 1) {
-
 							this.loginHandle(res.data.user)
-							toast({
-								title: res.msg
-							});
 							// this.login(data)
 							//  跳转到登录页
-
-
 						}
 						uni.hideLoading();
 					}).catch((err) => {
 						uni.hideLoading();
 					});
 				}
-
-
-
 			},
 			async loginHandle(data) {
 				this.login(data)
@@ -443,10 +455,8 @@
 					email: this.email,
 					// key: SMSType.REGISTER,
 				}).then((res) => {
+					this.$toast({title: res.msg});
 					if (res.code == 1) {
-						toast({
-							title: res.msg
-						});
 						this.$refs.uCode.start();
 					}
 				});
@@ -464,10 +474,10 @@
 					// key: SMSType.REGISTER,
 					country_code: this.country_code
 				}).then((res) => {
+					toast({
+						title: res.msg
+					});
 					if (res.code == 1) {
-						toast({
-							title: res.msg
-						});
 						this.$refs.uCode.start();
 					}
 				});

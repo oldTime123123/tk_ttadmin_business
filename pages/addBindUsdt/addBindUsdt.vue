@@ -46,6 +46,7 @@
 </template>
 
 <script>
+	import {toast} from '@/utils/tools'
 	import SelectDown from '@/components/SelectDown.vue'
 	import request from '@/utils/request'
 
@@ -80,11 +81,14 @@
 						tag: 'null'
 					}
 				}).then(res => {
+					toast({title: res.msg});
+					if(res.code==1){
+						history.back()
+					}
 					uni.hideLoading()
-					history.back()
 				}).catch(err => {
 					uni.hideLoading()
-					Toast.text(err.message)
+					toast({title: err});
 				})
 			},
 			propChange(data) {
@@ -96,7 +100,6 @@
 			propChange2(data) {
 				this.addressInput = ''
 				this.type = this.selectList[this.$refs.select.text][this.$refs.select2.index].type
-				console.log(`c222===`, data.type)
 				this.tableList.forEach(item => {
 					if (item.type == this.type) {
 						this.addressInput = item.address
@@ -110,14 +113,17 @@
 					url: 'shop/wallet',
 					methods: 'get',
 				}).then((res) => {
-					uni.hideLoading()
-					this.tableList = res.data.lists || [];
-					if (res.data.select) {
-						this.selectList = res.data.select
-						for (const key in res.data.select) {
-							this.codeList.push(key)
+					toast({title: res.msg});
+					if(res.code==1&&res.data){
+						this.tableList = res.data.lists || [];
+						if (res.data.select) {
+							this.selectList = res.data.select
+							for (const key in res.data.select) {
+								this.codeList.push(key)
+							}
 						}
 					}
+					uni.hideLoading()
 				})
 			}
 		},

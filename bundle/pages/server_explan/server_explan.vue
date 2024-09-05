@@ -12,6 +12,7 @@
 </template>
 
 <script>
+	import {toast} from '@/utils/tools'
 	import {
 		apiPolicyAgreement,
 	} from "@/api/app"
@@ -28,7 +29,10 @@
 				apiPolicyAgreement({
 					type: this.type
 				}).then(res => {
-					this.content = res.data[this.type];
+					toast({title: res.msg});
+					if(res.code==1&&res.data){
+						this.content = res.data[this.type];
+					}
 				})
 			},
 			back(){
