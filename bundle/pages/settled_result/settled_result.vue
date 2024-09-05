@@ -84,6 +84,10 @@
 					<view><text class="primary m-r-10">*</text>{{this.$t('settled.set_56')}}</view>
 					<view>{{applyDetail.monthly_income}}</view>
 				</view>
+				<view v-if="approveConfigData.verify_code==1" class="apply-form-item flex row-between">
+					<view><text class="primary m-r-10">*</text>{{this.$t('settled.set_60')}}</view>
+					<view>{{applyDetail.code}}</view>
+				</view>
 
 
 				<!-- 图片 -->

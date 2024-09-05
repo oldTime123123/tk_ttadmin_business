@@ -1062,6 +1062,7 @@ export default { // 德语
 		set_56: 'Monatliches Einkommen der Benutzer',
 		set_57: "Bitte laden Sie Ihr Shop-Profilbild hoch",
 		set_58: 'arbeiten',
-		set_59: "Holen Sie sich den Bestätigungscode"
+		set_59: "Holen Sie sich den Bestätigungscode",
+		set_60: 'ID-Nummer'
 	},
 }

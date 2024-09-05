@@ -1,17 +1,18 @@
 <template>
 
-	<view :class="[Certification_Status!=3?'mask':'']">
+	<view>
 		<!-- Header -->
 		<!-- <view class="header bg-white">
 			<u-search placeholder="输入商品名称" @change="change(current)" :show-action="false" v-model="keyword"></u-search>
 		</view> -->
+		<Settled v-if="Certification_Status!=3"></Settled>
 
 		<!-- Nav -->
-		<view class="nav bg-white" v-if="Certification_Status==3">
+		<view class="nav bg-white">
 			<u-tabs name="name" :show-bar="false" :list="commodityList" :is-scroll="true" :current="commodityLCurrent" @change="commodityLChange"
 				active-color="#40AFFA" />
 		</view>
-		<view class="nav bg-white" v-if="commodityLCurrent==2&&Certification_Status==3">
+		<view class="nav bg-white" v-if="commodityLCurrent==2">
 			<u-tabs name="name" :show-bar="false" :list="list" :is-scroll="true" :current="current" @change="change"
 				active-color="#40AFFA" />
 		</view>
@@ -31,13 +32,13 @@
 			</view>
 		</view>
 
-		<view class="section" :style="{'height': height}" v-if="Certification_Status==3">
+		<view class="section" :style="{'height': height}">
 			<mescroll-uni ref="mescrollRef" bottom="220rpx" height="100%"
 				@up="upScroll" :up="upOption" :down="downOption" @down="downCallback"
 				>
 				<view style="display: flex;flex-wrap: wrap;margin-top: 10px;justify-content: space-between;">
 					<block v-for="(item2, index2) in recordsList" :key="index2">
-						<goods-card :content="item2" :Gotype="commodityLCurrent" @unpdateList="unpdateList">
+						<goods-card :content="item2" :Certification_Status="Certification_Status" :Gotype="commodityLCurrent" @unpdateList="unpdateList">
 						</goods-card>
 					</block>
 				</view>
@@ -50,6 +51,7 @@
 
 <script>
 	import request from '@/utils/request'
+	import Settled from "@/components/Settled/Settled";
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	import {
 		apiGoodsLists,
@@ -215,6 +217,12 @@
 			},
 			//头部tabs（已上架、已下架、待添加）切换事件
 			commodityLChange(e){
+				if(this.Certification_Status!=3){
+					this.$toast({
+						title: this.$t('bus_my.y28'),
+					});
+					return
+				}
 				this.$refs.mescrollRef.mescroll.scrollTo( 0, 0 );
 				this.commodityLCurrent = e;
 				this.current = 0;

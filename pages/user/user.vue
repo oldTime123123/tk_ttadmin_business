@@ -216,8 +216,6 @@
 			menuJump(item) {
 				// console.log(item.link,this.$t('bus_my.y9'));
 				let status = uni.getStorageSync('Certification_Status');
-				console.log(status,'status1');
-				
 				if(status==3){
 					if (item.name == this.$t('bus_my.y9')) {
 						// uni.reLaunch({

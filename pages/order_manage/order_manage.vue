@@ -1,8 +1,8 @@
 <template>
-	<view :class="[Certification_Status!=3?'mask':'']">
-		<view class="orderM" v-if="Certification_Status==3">
-
-			<view style="position: fixed;top: 0;width: 100%;">
+	<view>
+		<view class="orderM">
+			<Settled v-if="Certification_Status!=3"></Settled>
+			<view class="uTans" :style="{top: Certification_Status==3?'0':'180px'}">
 
 				<view class="menu flex mt14">
 					<view class="menu_tab" @click="tabsChange(0)">
@@ -61,7 +61,7 @@
 				</view>
 
 			</view>
-			<view style="position: fixed;top: 45px;width: 100%;height: calc(100% - 43px);overflow-y: auto;">
+			<view class="uFixed" :style="{top: Certification_Status==3?'45px':'245px'}">
 				<z-paging class="mt54 " ref="paging" v-model="recordsList" @query="getData" width="100%" :fixed="false"
 					:refresher-enabled="false" :auto='false' :to-bottom-loading-more-enabled="true"
 					:auto-full-height="true" :auto-show-back-to-top="true" 
@@ -236,6 +236,7 @@
 <script>
 	// import Menu from '@/components/menu.vue'
 	// import Details from '@/components/product/details.vue'
+	import Settled from "@/components/Settled/Settled";
 	import request from '@/utils/request'
 	import store from '@/store'
 	import { timestampToTime } from "@/utils/tools.js";
@@ -330,10 +331,8 @@
 			this.currency = uni.getStorageSync('currency');
 			if (store.getters.token) {
 				this.setTabBar();
-				if(this.Certification_Status==3){
-					this.getData();
-					this.orderNum()
-				}
+				this.getData();
+				this.orderNum()
 			} else if (e.data) {
 				this.login(e.data)
 			} else {
@@ -367,6 +366,12 @@
 				})
 			},
 			tabsChange(ind){
+				if(this.Certification_Status!=3){
+					this.$toast({
+						title: this.$t('bus_my.y28'),
+					});
+					return
+				}
 				this.allChange = false
 				this.numberTotle = 0
 				this.myListIndex = ind
@@ -484,6 +489,12 @@
 				})
 			},
 			delivery(item)  {
+				if(this.Certification_Status!=3){
+					this.$toast({
+						title: this.$t('bus_my.y28'),
+					});
+					return
+				}
 				request({
 					url: 'order/deliveryLists',
 					methods: 'get',
@@ -889,5 +900,15 @@
 		right: 13px;
 		top: 12px;
 	}
-
+	.uTans{
+		position: fixed;
+		top: 180px;width: 100%;
+	}
+	.uFixed{
+		position: fixed;
+		top: 245px;
+		width: 100%;
+		height: calc(100% - 43px);
+		overflow-y: auto;
+	}
 </style>

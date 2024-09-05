@@ -142,7 +142,7 @@
 						<text class="sm">{{this.$t("settled.set_34")}}</text>
 					</u-checkbox>
 					<router-link :to="{path: '/bundle/pages/server_explan/server_explan', query: {type: 3}}">
-						<text class="primary sm">《{{this.$t('settled.set_35')}}》</text>
+						<text class="primary sm blue">《{{this.$t('settled.set_35')}}》</text>
 					</router-link>
 				</view>
 
@@ -340,7 +340,7 @@
 			onSuccess(data) {
 				if(data.code!=1){
 					toast({
-						title: res.msg
+						title: data.msg
 					})
 					return
 				}
@@ -352,7 +352,7 @@
 			onSuccess3(data) {
 				if(data.code!=1){
 					toast({
-						title: res.msg
+						title: data.msg
 					})
 					return
 				}
@@ -361,10 +361,10 @@
 			onRemove3(index) {
 				this.fileList.splice(index, 1)
 			},
-			onSuccess2(data) {
+			onSuccess2(data) {				
 				if(data.code!=1){
 					toast({
-						title: res.msg
+						title: data.msg
 					})
 					return
 				}
@@ -449,5 +449,8 @@
 		// 		}
 		// 	}
 		// }
+		.blue{
+			color: #007aff;
+		}
 	}
 </style>

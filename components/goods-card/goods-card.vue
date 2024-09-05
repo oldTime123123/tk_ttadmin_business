@@ -69,6 +69,10 @@
 		name: 'GoodsCard',
 
 		props: {
+			Certification_Status: {
+				type: Number,
+				default: 0,
+			},
 			content: {
 				type: Object,
 				default: () => {},
@@ -90,6 +94,12 @@
 		methods: {
 			//单个上下架操作
 			Shelves(){
+				if(this.Certification_Status!=3){
+					this.$toast({
+						title: this.$t('bus_my.y28'),
+					});
+					return
+				}
 				uni.showLoading()
 				request({
 					url: 'goods/upDownShowcase',

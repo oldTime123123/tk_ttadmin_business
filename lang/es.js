@@ -1341,7 +1341,8 @@ export default { // 西班牙
 		set_56: 'Ingresos mensuales de los usuarios',
 		set_57: 'Sube la foto de perfil de tu tienda',
 		set_58: 'funcionar',
-		set_59: "Obtener código de verificación"
+		set_59: "Obtener código de verificación",
+		set_60: 'número de identificación'
 	},
 
 }

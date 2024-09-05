@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2024-08-09 10:34:33
  * @LastEditors: chenpn chenpn699@gmail.com
- * @LastEditTime: 2024-09-04 15:11:22
+ * @LastEditTime: 2024-09-05 14:43:25
  * @FilePath: \1\web_business\lang\en.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -66,7 +66,8 @@ export default { // 英文
 		set_56: 'Monthly income of users',
 		set_57: 'Please upload your store profile picture',
 		set_58: 'operate',
-		set_59: "Get verification code"
+		set_59: "Get verification code",
+		set_60: 'ID number'
 	},
 	tabbar: {
 		home: "Home",

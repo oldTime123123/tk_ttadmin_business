@@ -2,7 +2,7 @@
  * @Author: chenpn chenpn699@gmail.com
  * @Date: 2024-08-28 09:19:20
  * @LastEditors: chenpn chenpn699@gmail.com
- * @LastEditTime: 2024-09-04 21:32:20
+ * @LastEditTime: 2024-09-04 21:52:25
  * @FilePath: \web_business\config\app.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -30,8 +30,8 @@ const baseURLMap = {
 }
 
 // const baseURL = SWITCH_DEVELOPMENT ? baseURLMap['development'] : baseURLMap[process.env.NODE_ENV]
-const baseURL = 'https://api.ttadmin.in'
-// const baseURL = 'https://likeshop.task678.com'
+// const baseURL = 'https://api.tksmalladmin.com'
+const baseURL = 'https://likeshop.task678.com'
 
 
 /** E API BaseURL **/
