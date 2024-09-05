@@ -179,9 +179,6 @@
             },
             async getAddressFunc(id) {
                 const res = await apiOrderGetAddress({id})
-                this.$toast({
-                    title: res.msg
-                });
                 if(res.code==1){
                     this.refund_address.nickname =  res.data.consignee;
                     this.refund_address.mobile = res.data.mobile

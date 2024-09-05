@@ -118,7 +118,6 @@
             
             async getExpressFunc(id) {
                 const res = await apiOrderExpress({id})
-                toast({ title: res.msg});
                 if(res.data){
                     this.express = res.data;
                 }

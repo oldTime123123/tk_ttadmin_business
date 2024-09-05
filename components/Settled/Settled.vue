@@ -2,7 +2,7 @@
  * @Author: chenpn chenpn699@gmail.com
  * @Date: 2024-09-03 17:37:20
  * @LastEditors: chenpn chenpn699@gmail.com
- * @LastEditTime: 2024-09-05 18:17:58
+ * @LastEditTime: 2024-09-05 20:21:00
  * @FilePath: \web_business\components\Settled\Settled.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -40,7 +40,6 @@
 		methods: {
 			async applyStatusfn() {
 				await applyStatus().then(res => {
-					toast({title: res.msg});
 					if(res.code==1&&res.data){
 						this.statusText = res.data.status
 						uni.setStorageSync('Certification_Status', this.statusText)

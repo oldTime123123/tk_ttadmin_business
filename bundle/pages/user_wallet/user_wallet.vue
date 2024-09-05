@@ -267,7 +267,6 @@
 					url: "shop/rechargeWithdrawType",
 					methods: 'get',
 				}).then(res => {
-					this.$toast({title: res.msg})
 					if(res.code==1&&res.data){
 						this.rechangeType = res.data.recharge_type
 						this.withdrawType = res.data.withdraw_type
@@ -310,9 +309,6 @@
 							url: "index/bankConfig",
 							methods: 'get',
 						}).then(res => {
-							this.$toast({
-								title: res.msg
-							})
 							if(res.code==1){
 								if(res.data&&res.data.config.withdrawal_way == 'kefu'){
 									uni.hideLoading()

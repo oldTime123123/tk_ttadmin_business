@@ -41,7 +41,6 @@
                     url: 'shop/getCustomer',
                     method: "get",
                 }).then((res) => {
-                    toast({title: res.msg});
                     if (res.data&&res.data.list.length > 0) {
                         res.data.list.forEach((item)=>{
                             item.logo = baseURL+item.logo

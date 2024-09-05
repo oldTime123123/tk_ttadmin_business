@@ -113,7 +113,6 @@
 					url: 'shop/wallet',
 					methods: 'get',
 				}).then((res) => {
-					toast({title: res.msg});
 					if(res.code==1&&res.data){
 						this.tableList = res.data.lists || [];
 						if (res.data.select) {

@@ -115,7 +115,6 @@
 						page_size: this.pages.size
 					}
 				}).then(res => {
-					toast({title: res.msg});
 					if(res.data&&res.data.list){
 						this.$refs.paging1.complete(res.data.list);
 						this.pages.page += 1

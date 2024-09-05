@@ -126,7 +126,6 @@
 					url: `finance/${this.recType}/recharge/index`,
 					methods: 'get'
 				}).then(res => {
-					this.$toast({title: res.msg});
 					if(res.code==1){
 						if (!res.data.order) {
 							uni.switchTab({

@@ -199,7 +199,6 @@
 			},
 			async getCountryListfn() {
 				let res = await getCountryList()
-				this.$toast({title: res.msg});
 				if (res.code == 1) {
 					this.CountryList = res.data;
 					this.isShowMsg = res.data[0].is_sms;

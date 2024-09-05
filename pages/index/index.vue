@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2024-08-05 10:58:11
  * @LastEditors: chenpn chenpn699@gmail.com
- * @LastEditTime: 2024-09-05 16:56:27
+ * @LastEditTime: 2024-09-05 20:16:39
  * @FilePath: \1\web_business\pages\index\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -271,7 +271,6 @@
 			async getPageInfo() {
 				uni.showLoading();
 				const res = await apiIndex();
-				this.$toast({title: res.msg});
 				if(res.code==1){
 					//头部总列表数据
 					this.totallData[0].val = res.data.order_amount;
@@ -351,7 +350,6 @@
 					methods: 'get',
 
 				}).then(res => {
-					this.$toast({title: res.msg});
 					if(res.code==1){
 						this.currency = res.data.currency;
 						uni.setStorageSync('currency', res.data.currency)

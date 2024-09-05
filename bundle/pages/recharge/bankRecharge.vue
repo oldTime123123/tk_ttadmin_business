@@ -228,7 +228,6 @@
 					url: 'shop/offlineRechargeInfo',
 					methods: 'get',
 				}).then(res => {
-					this.$toast({title: res.msg});
 					if(res.code==1){
 						if(res.data){
 							this.rechargeNumber = res.data.order.amount;

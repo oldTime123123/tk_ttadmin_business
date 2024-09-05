@@ -52,7 +52,6 @@
 </template>
 
 <script>
-    import {toast} from '@/utils/tools'
 	import request from '@/utils/request'
     export default {
         data() {
@@ -80,14 +79,12 @@
                     methods: 'get',
                     url: 'user/loan/repaymentInfo',
                 }).then(res => {
-                    toast({title: res.msg});
                     this.config = res.data
                 })
                 request({
                     methods: 'get',
                     url: 'user/loan/list',
                 }).then(res => {
-                    toast({title: res.msg});
                     this.loanList = res.data
                 })
 
@@ -95,7 +92,6 @@
                     methods: 'get',
                     url: 'user/loan/config'
                 }).then(res => {
-                    toast({title: res.msg});
                     this.loanconfig = res.data
                 })
             }

@@ -283,7 +283,7 @@ export default { // 法語
 		wa_a4: "Dépôt",
 		wa_a5: "À traiter",
 		wa_a6: "Règlement",
-		wa_a7: "Retrait",
+		wa_a7: "Retirer de l'argent",
 		wa_a8: "Lier le compte de retrait",
 		wa_a9: "Définir le mot de passe de transaction",
 		wa_a10: "Enregistrements de revenus et de dépenses",

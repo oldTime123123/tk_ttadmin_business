@@ -206,7 +206,6 @@
 						type: id
 					}
 				}).then(res => {
-					this.$toast({title: res.msg})
 					if(res.code==1){
 						this.pageData = res.data
 						if (res.data.order) {
@@ -291,7 +290,6 @@
 					url: 'shop/productWay',
 					methods: 'get',
 				}).then(res => {
-					this.$toast({title: res.msg});
 					if(res.code==1&&res.data){
 						const currencyList = [];
 						res.data.recharge_type.forEach((item, index) => {

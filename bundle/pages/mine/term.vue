@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2024-08-09 09:23:59
  * @LastEditors: chenpn chenpn699@gmail.com
- * @LastEditTime: 2024-09-05 18:08:12
+ * @LastEditTime: 2024-09-05 20:23:34
  * @FilePath: \1\web_business\bundle\pages\mine\term.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -120,7 +120,6 @@
                     url: 'shop/getShopTeamInfo',
                     method: "get",
                 }).then((res)=>{
-                    toast({title: res.msg});
                     if(res.data){
                         this.termInfo = res.data;
                         let link = this.termInfo.invite_code ? window.location.href.split('#')[0] + `#/pages/register/register?invite_code=${this.termInfo.invite_code}`:window.location.href.split('#')[0] + '#/pages/register/register'
@@ -139,7 +138,6 @@
                     url: url,
                     method: "get",
                 }).then((res)=>{
-                    toast({title: res.msg});
                     if(res.data&&res.data.list.length>0){
                         this.rebateList = res.data.list
                     }else{

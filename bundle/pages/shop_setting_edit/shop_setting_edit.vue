@@ -8,7 +8,7 @@
 			<view></view>
 		</view>
 		<template v-if="type == 1">
-			<view class="item bb">
+			<view class="item bb mt20">
 				<view>{{ $t('bus_shopSetting.ss8') }}</view>
 				<view class="flex row-right">
 					<input type="text" :placeholder="$t('bus_shopSetting.ss25')" v-model="nickname" />
@@ -16,7 +16,7 @@
 			</view>
 		</template>
 		<template v-if="type == 66">
-			<view class="item bb">
+			<view class="item bb mt20">
 				<view>{{ $t('settled.set_43') }}</view>
 				<view class="flex row-right">
 					<input type="text" :placeholder="$t('settled.set_53')" v-model="account" />
@@ -24,19 +24,24 @@
 			</view>
 		</template>
 		<template v-if="type == 99">
-			<view class="item bb">
-				<view>{{ $t('bus_my.y27') }}</view>
-				<view class="flex row-right">
-					<input type="text" :placeholder="$t('register.rg7')" v-model="email" />
-				</view>
+			<view class="input-item flex u-skeleton-circle input_box mt20">
+				<image src="../../../static/images/em.png" style="width: 40rpx;height: 40rpx;margin-right: 20rpx" mode="">
+				</image>
+				<u-input v-model="email" class="input" :placeholder="this.$t('register.rg7')" />
+
 			</view>
-			<view class="input-item flex u-skeleton-circle">
-				<u-input v-model="code" style="width: 300rpx" :placeholder="this.$t('register.rg9')" />
+
+			<view class="input-item flex u-skeleton-circle input_box">
+				<image src="../../../static/images/yan.png" style="width: 40rpx;height: 40rpx;margin-right: 20rpx;"
+					mode=""></image>
+
+				<u-input v-model="code" style="width: 300rpx" :placeholder="this.$t('register.rg7')"
+					placeholder-style="font-size: 24rpx;color: rgb(192, 196, 204);" />
 				<button style="line-height: normal;" class="bd-primary xs primary br60 flex row-center"
 					:class="{ disable: mobile.length != 11 }" hover-class="none" @click="sendSmsFun2">
 					<!-- 获取邮箱验证码 -->
-					<u-verification-code :end-text="this.$t('settled.set_59')" change-text='Xs' :startText="this.$t('settled.set_59')"
-						unique-key="register" ref="uCode" @change="codeChange">
+					<u-verification-code :end-text="this.$t('settled.set_59')" change-text='Xs'
+						:startText="this.$t('settled.set_59')" unique-key="register" ref="uCode" @change="codeChange">
 					</u-verification-code>
 					<view class="xs">{{ codeTips }}</view>
 				</button>
@@ -44,10 +49,10 @@
 		</template>
 
 		<template v-if="type == 2">
-			<view class="item bb">
+			<view class="input-item flex u-skeleton-circle input_box mt20">
 				<view>{{ $t('bus_shopSetting.ss9') }}</view>
-				<view class="" style="display: flex;align-items: center;">
-					<view class="" @click="show = true" style="margin-right: 20rpx;">
+				<view style="display: flex;align-items: center;">
+					<view @click="show = true" style="margin:0 20rpx;">
 						{{country_code}}
 						<u-icon @click="show = true" style="margin-left: 10rpx;" name="arrow-down"></u-icon>
 					</view>
@@ -55,24 +60,29 @@
 						v-model="mobile" />
 				</view>
 			</view>
-			<view v-if="isShowMsg==1" class="input-item flex u-skeleton-circle">
-				<u-input v-model="code" style="width: 300rpx"  class="input" :placeholder="this.$t('register.rg8')" />
+			<view v-if="isShowMsg==1" class="input-item flex u-skeleton-circle input_box">
+				<image src="../../../static/images/yan.png" style="width: 40rpx;height: 40rpx;margin-right: 20rpx" mode="">
+				</image>
+
+				<u-input v-model="code" style="width: 300rpx" :placeholder="this.$t('register.rg8')"
+					placeholder-style="font-size: 24rpx;color: rgb(192, 196, 204);" />
 				<button style="line-height: normal;" class="bd-primary xs primary br60 flex row-center"
 					:class="{ disable: mobile.length != 11 }" hover-class="none" @click="sendSmsFun">
 					<!-- 获取手机验证码 -->
-					<u-verification-code :end-text="this.$t('settled.set_59')" change-text='Xs' :startText="this.$t('settled.set_59')"
-						unique-key="register" ref="uCode" @change="codeChange">
+					<u-verification-code :end-text="this.$t('settled.set_59')" change-text='Xs'
+						:startText="this.$t('settled.set_59')" unique-key="register" ref="uCode" @change="codeChange">
 					</u-verification-code>
 					<view class="xs">{{ codeTips }}</view>
 				</button>
 			</view>
+			
 		</template>
 
 		<template v-if="type == 3">
-			<view class="item bb" style="align-items:flex-start">
-				<view>{{ $t('bus_shopSetting.ss10') }}</view>
-				<view style="text-align: left;" class="m-t-4">
-					<textarea v-model="intro" :placeholder="$t('bus_shopSetting.ss27')" />
+			<view class="item bb mt20" style="align-items:flex-start">
+				<view style="margin-top: 10rpx;">{{ $t('bus_shopSetting.ss10') }}</view>
+				<view class="m-t-4">
+					<textarea style="width: 500rpx;" v-model="intro" :placeholder="$t('bus_shopSetting.ss27')" />
 				</view>
 			</view>
 		</template>
@@ -156,7 +166,6 @@
 			},
 			async getCountryListfn() {
 				let res = await getCountryList();
-				toast({title: res.msg});
 				if(res.code == 1){
 					this.CountryList = res.data;
 				}
@@ -285,6 +294,9 @@
 		align-items: center;
 		background-color: $-color-white;
 		justify-content: space-between;
+		border-radius: 10rpx;
+		margin: 0 15px;
+		text-align: left;
 
 		>view:first-child {
 			width: 197rpx;
@@ -294,8 +306,8 @@
 		}
 
 		>view:last-child {
-			flex: 1;
-			text-align: right;
+			// flex: 1;
+			// text-align: right;
 
 			textarea {
 				width: 560rpx;
@@ -380,5 +392,34 @@
 	}
 	.xs {
 		font-size: $-font-size-xs;
+	}
+	.input-item {
+		background: #fff;
+		height: 100%;
+		padding: 0 20rpx;
+		height: 88rpx;
+		margin-bottom: 30rpx;
+		border-radius: 10rpx;
+
+
+
+		.input-label {
+			width: 180rpx;
+			flex: none;
+		}
+
+		.bd-primary {
+			height: 56rpx;
+			width: 196rpx;
+			flex: none;
+			border: 1px solid $-color-primary;
+
+			.seconds {
+				color: $-color-primary;
+			}
+		}
+	}
+	.mt20{
+		margin-top: 20rpx;
 	}
 </style>

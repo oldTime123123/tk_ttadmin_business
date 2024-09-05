@@ -220,9 +220,6 @@
 			...mapMutations(['login']),
 			getRegisterType(){
 				getRegisterType().then((res)=>{
-					toast({
-						title: res.msg
-					});
 					if(res.code==1){
 						this.isShowEmail = res.data.email;
 						this.isShowMobile = res.data.mobile;

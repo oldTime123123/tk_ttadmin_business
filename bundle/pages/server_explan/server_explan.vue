@@ -29,7 +29,6 @@
 				apiPolicyAgreement({
 					type: this.type
 				}).then(res => {
-					toast({title: res.msg});
 					if(res.code==1&&res.data){
 						this.content = res.data[this.type];
 					}

@@ -249,7 +249,6 @@
 						page_size: this.pages.size,
 					}
 				}).then((res) => {
-					this.$toast({title: res.msg});
 					if(res.code==1){
 						const hasNext = !!res.data.more;
 						if(res.data.lists.length>0){
@@ -280,7 +279,6 @@
 					page_no: this.pages.page,
 					page_size: this.pages.size,
 				}).then((res) => {		
-					this.$toast({title: res.msg});
 					if(res.code==1){
 						const hasNext = !!res.data.more;
 						if(res.data.lists.length>0){

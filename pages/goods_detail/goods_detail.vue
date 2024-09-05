@@ -131,7 +131,6 @@
                         id: this.goods_id,
                         visit: 1,
                     }).then(res => {
-                        this.$toast({title: res.msg});
                         if(res.code==1&&res.data){
                             this.goodsInfo = res.data
                             const hasComment = JSON.stringify(res.data.goods_comment) !== '[]'

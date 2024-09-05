@@ -209,7 +209,6 @@
 			...mapActions(["getUser"]),
 			async downCallback() {
 				let res = await this.getUser();
-				this.$toast({title: res.msg});
 				this.info = JSON.parse(JSON.stringify(res.data));
 				this.mescroll.endSuccess(0, false);
 			},
@@ -231,7 +230,6 @@
 								url: 'account/kefuLogin',
 								method: "POST"
 							}).then(res => {
-								this.$toast({ title: res.msg });
 								if(res.code==1){
 									if (res.data && res.data.token) {
 										uni.hideLoading();
@@ -290,7 +288,6 @@
 				const res = await apiSetShopInfo({
 					is_run: event.value ? 1 : 0,
 				});
-				this.$toast({title: res.msg});
 			},
 			getweidu() {
 				request({
@@ -300,7 +297,6 @@
 						size: 1000
 					}
 				}).then(res => {
-					this.$toast({title: res.msg});
 					this.numTotal = res.data ? res.data.count : undefined;
 				}).catch(err => {
 					uni.showToast({
@@ -342,7 +338,6 @@
 			uni.showLoading();
 			this.getweidu();
 			this.getUser().then((res) => {
-				this.$toast({title: res.msg});
 				this.info = JSON.parse(JSON.stringify(res.data));
 				uni.hideLoading()
 			}).catch((err) => {

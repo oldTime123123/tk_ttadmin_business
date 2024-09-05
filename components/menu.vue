@@ -2,7 +2,7 @@
  * @Author: chenpn chenpn699@gmail.com
  * @Date: 2024-08-20 09:51:18
  * @LastEditors: chenpn chenpn699@gmail.com
- * @LastEditTime: 2024-09-05 16:48:13
+ * @LastEditTime: 2024-09-05 20:31:54
  * @FilePath: \web_business\components\menu.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -41,7 +41,6 @@
 					url: 'shop/getCustomer',
 					method: "get",
 				}).then((res)=>{
-					this.$toast({title: res.msg})
 					if(res.code==1){
 						if(res.data.list.length>0){
 							window.location.href = res.data.list[0].link

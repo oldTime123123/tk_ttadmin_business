@@ -174,9 +174,6 @@
 					url: "shop/getwalletInfo",
 					methods: 'get',
 				}).then(res => {
-					this.$toast({
-						title: res.msg
-					})
 					this.userInfo = res.data
 				}).catch(err => {
 					this.$toast({
@@ -189,9 +186,6 @@
 					methods: 'get',
 
 				}).then((res) => {
-					this.$toast({
-						title: res.msg
-					})
 					this.pageData = res.data
 
 				});
@@ -204,9 +198,6 @@
 					url: "index/bankConfig",
 					methods: 'get',
 				}).then(res => {
-					this.$toast({
-						title: res.msg
-					})
 					if (res.data&&res.data.config) {
 						this.min = res.data.config.withdrawal_bank_min;
 						this.max = res.data.config.withdrawal_bank_max;

@@ -500,7 +500,6 @@
 						oid: item.id,
 					}
 				}).then((res)=>{
-					this.$toast({title: res.msg});
 					if(res.code==1&&res.data){
 						this.deliveryData = res.data;
 						this.stepCurrent = res.data.length;
@@ -528,7 +527,6 @@
 						page_size: this.pages.size,
 					}
 				}).then((res)=>{
-					this.$toast({title: res.msg});
 					if(res.code==1){
 						if(res.data.list){
 							res.data.list.forEach(item => {
@@ -552,7 +550,6 @@
 					methods: 'get',
 
 				}).then(res => {
-					this.$toast({title: res.msg});
 					if(res.code==1&&res.data){
 						this.numTotal = res.data.pay+res.data.delivery+res.data.receiving+res.data.finish+res.data.close;
 						this.numList = res.data

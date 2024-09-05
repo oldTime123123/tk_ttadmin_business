@@ -109,7 +109,6 @@
 					url: "shop/getwalletLogType",
 					methods: 'get',
 				}).then(res => {
-					toast({title: res.msg});
 					if(res.code==1){
 						let newArr = []
 						res.data.forEach(item => {

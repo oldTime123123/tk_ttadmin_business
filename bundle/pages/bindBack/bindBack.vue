@@ -100,7 +100,6 @@
 					methods: 'get',
 
 				}).then((res) => {
-					toast({title: res.msg});
 					if(res.code==1&&res.data){
 						this.dataForm.bank_name = res.data.bank.bank_name
 						this.dataForm.account_holder = res.data.bank.account_holder

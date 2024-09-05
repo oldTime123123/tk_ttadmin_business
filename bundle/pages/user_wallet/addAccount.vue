@@ -489,7 +489,6 @@
                     url: "user/attribute/wallet/list",
                     methods: 'get',
                 }).then(res => {
-					this.$toast({title: res.msg});
 					if(res.code==1&&res.data){
 						this.walletList = res.data.list
 						const newArr = []
@@ -552,7 +551,6 @@
 					methods: 'get',
 					data: this.pages
 				}).then(res => {
-					this.$toast({title: res.msg});
 					if(res.code==1&&res.data){
 						this.paging.complete(res.data.data);
 						this.pages.page += 1

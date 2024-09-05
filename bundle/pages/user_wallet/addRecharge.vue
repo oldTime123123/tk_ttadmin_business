@@ -577,9 +577,6 @@
 					methods: 'get',
 					data: this.pages
 				}).then(res => {
-					this.$toast({
-						title: res.msg
-					})
 					if(res.code==1&&res.data){
 						this.paging.complete(res.data.data);
 						this.pages.page += 1

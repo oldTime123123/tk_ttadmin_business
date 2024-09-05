@@ -72,7 +72,6 @@
 					url: 'shop/wallet',
 					methods: 'get',
 				}).then((res) => {
-					this.$toast({title: res.msg});
 					this.tableList = res.data ? res.data.lists : [];
 					uni.hideLoading()
 				});

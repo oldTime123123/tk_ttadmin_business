@@ -216,7 +216,6 @@
 					method: "POST"
 				})
 				.then(res => {
-					toast({title: res.msg});
 					if(res.data&&res.data.list){
 						this.recordsList = res.data.list || []
 					}else{
@@ -261,7 +260,6 @@
 					}
 				})
 				.then(res => {
-					toast({title: res.msg});
 					this.yhj_list = res.data.data || []
 				}).catch(err => {
 					uni.showToast({

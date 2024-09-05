@@ -90,7 +90,6 @@
         methods: {
             async getWithdrawInfoFunc() {
                 const res = await apiGetWithdrawInfo();
-                this.$toast({title: res.msg})
                 this.withdrawInfo = res.data;
             },
 

@@ -266,7 +266,6 @@
 					url: "shop/getwalletInfo",
 					methods: 'get',
 				}).then(res => {
-					this.$toast({title: res.msg});
 					if(res.code==1&&res.data){
 						this.pageData = res.data
 					}
@@ -332,7 +331,6 @@
 						type: id
 					}
 				}).then(res => {
-					this.$toast({title: res.msg});
 					if(res.code==1&&res.data){
 						this.watchList = res.data
 						if (res.data.user_link && res.data.user_link.length > 0) {
@@ -356,7 +354,6 @@
 					url: 'shop/productWay',
 					methods: 'get',
 				}).then(res => {
-					this.$toast({title: res.msg});
 					if(res.code==1&&res.data){
 						const currencyList = []
 						res.data.withdraw_list.forEach((item, index) => {

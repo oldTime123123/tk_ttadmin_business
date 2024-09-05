@@ -54,7 +54,6 @@
 					url: 'shop/vipList',
 					methods: 'get',
 				}).then((res) => {
-					toast({title: res.msg});
 					this.vipList = res.data;
 					uni.hideLoading()
 				})
