@@ -31,6 +31,8 @@
 				<u-input v-model="mobile" class="input" :placeholder="this.$t('register.rg6')" />
 			</view>
 			<view v-else class="input-item flex u-skeleton-circle input_box">
+				<image src="../../static/images/em.png" style="width: 40rpx;height: 40rpx;margin-right: 20rpx" mode="">
+				</image>
 				<u-input v-model="email" class="input" :placeholder="this.$t('register.rg7')" />
 
 			</view>
@@ -94,7 +96,7 @@
 						</router-link>
 						{{this.$t('register.rg20')}} -->
 						<router-link to="/bundle/pages/server_explan/server_explan?type=1">
-							<view class="primary">《{{this.$t('register.rg15')}}》</view>
+							<view class="primary" style="color:#40AFFA ;">《{{this.$t('register.rg15')}}》</view>
 						</router-link>
 					</div>
 				</u-checkbox>
@@ -342,7 +344,7 @@
 
 						}
 						uni.hideLoading();
-					}).catch(()=>{
+					}).catch(() => {
 						uni.hideLoading();
 					});
 				} else {
@@ -360,7 +362,7 @@
 
 						}
 						uni.hideLoading();
-					}).catch((err)=>{
+					}).catch((err) => {
 						uni.hideLoading();
 					});
 				}

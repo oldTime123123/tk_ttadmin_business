@@ -255,7 +255,7 @@
 					})
 				} else {
 					if (!email) return this.$toast({
-						title: this.$t('register.rg9')
+						title: this.$t('register.rg7')
 					})
 				}
 				if (!checked) return this.$toast({
@@ -281,7 +281,7 @@
 						})
 					}
 					uni.hideLoading();
-				}).catch(()=>{
+				}).catch(() => {
 					uni.hideLoading();
 				})
 			},
