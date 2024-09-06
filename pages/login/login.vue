@@ -36,7 +36,7 @@
 				</view>
 				<view v-if="type==2" style="box-sizing: border-box;padding: 16rpx 25rpx;"
 					class="input-item flex u-skeleton-circle input_box">
-					<view @click="show = true" style="margin-right: 20rpx;">
+					<view @click="popShow" style="margin-right: 20rpx;">
 						{{country_code}}
 						<u-icon style="margin-left: 10rpx;" name="arrow-down"></u-icon>
 					</view>
@@ -77,8 +77,12 @@
 
 		</view>
 		<u-popup v-model="show" width="250">
-			<image :src="appConfig.shop_login_logo" style="width: 90%;height: 60rpx;margin-top: 40rpx;margin-left: 5%;"
-				mode=""></image>
+			<view class="inpSearch  ">
+				<input type="text" style="width: 170rpx;text-align: center;" @tap.stop="searchHandle"
+					@input="searchHandle">
+				<nut-icon size='18px' type="search"></nut-icon>
+				<!-- 				<nut-icon name="search" style="margin-right: 40rpx;" size="20" color="rgb(22, 183, 57)"></nut-icon> -->
+			</view>
 			<view class="country_code" v-for="item of CountryList" @click="changeCountry(item)">
 				<text style="margin-right: 10rpx;">{{item.code}}</text>
 				<text>{{item.countryName}}</text>
@@ -130,6 +134,7 @@
 			return {
 				password: '',
 				account: '',
+				email: '',
 				checked: false,
 				isPassword: true,
 				client: store.getters.client, //1-微信小程序 2-微信公众号 3-安卓app 4-苹果app 5-pc端 6-h5
@@ -153,27 +158,45 @@
 				CountryList: [],
 				isShowEmail: false,
 				isShowMobile: false,
-
+				newCountryList: []
 			};
 		},
 
 		methods: {
 			...mapMutations(['login']),
 			...mapActions(['getUser']),
-			getRegisterType(){
-				getRegisterType().then((res)=>{
-					if(res.code==1){
+			searchHandle(e) {
+				if (!e.detail.value) {
+					this.CountryList = this.newCountryList
+					return
+				}
+				let searchCountryList = []
+				this.newCountryList.forEach(item => {
+					if (item.code.includes(e.detail.value)) {
+						searchCountryList.push(item)
+					}
+				})
+				this.CountryList = searchCountryList
+				// console.log(this.CountryList,searchCountryList,'sss')
+			},
+			getRegisterType() {
+				getRegisterType().then((res) => {
+					if (res.code == 1) {
 						this.isShowEmail = res.data.email;
 						this.isShowMobile = res.data.mobile;
-						if(this.isShowMobile){
+						if (this.isShowMobile) {
 							this.getCountryListfn()
 						}
 					}
-				}).catch((err)=>{
+				}).catch((err) => {
 					toast({
 						title: err
 					});
 				})
+			},
+			popShow(){
+				this.CountryList = this.newCountryList;
+				this.show = true;
 			},
 			juplink() {
 				uni.navigateTo({
@@ -219,6 +242,7 @@
 				let res = await getCountryList()
 				if (res.code == 1) {
 					this.CountryList = res.data;
+					this.newCountryList = res.data;
 					this.isShowMsg = res.data[0].is_sms;
 					this.country_code = res.data[0].code
 				}
@@ -353,6 +377,18 @@
 	};
 </script>
 <style lang="scss">
+	.inpSearch {
+		top: 0.3125rem;
+		left: 0.625rem;
+		width: 90%;
+		height: 2.0875rem;
+		border-radius: 1.25rem;
+		border: 0.03125rem solid #000;
+		display: flex;
+		align-items: center;
+		margin: 0.625rem auto;
+	}
+
 	.input_box {
 		background: #EDF0F1;
 		border-radius: 15rpx;

@@ -58,9 +58,9 @@
 			<view class="input-item flex u-skeleton-circle input_box mt20">
 				<!-- <view>{{ $t('bus_shopSetting.ss9') }}</view> -->
 				<view style="display: flex;align-items: center;">
-					<view @click="show = true" style="margin:0 20rpx;">
+					<view  @click="popShow" style="margin:0 20rpx;">
 						{{country_code}}
-						<u-icon @click="show = true" style="margin-left: 10rpx;" name="arrow-down"></u-icon>
+						<u-icon style="margin-left: 10rpx;" name="arrow-down"></u-icon>
 					</view>
 					<input style="width: 220rpx;text-align: left;" type="text" :placeholder="$t('bus_shopSetting.ss26')"
 						v-model="mobile" />
@@ -97,8 +97,11 @@
 			{{ $t('tk_in.i_s1') }}
 		</view>
 		<u-popup v-model="show" width="250">
-			<image :src="appConfig.shop_login_logo" style="width: 90%;height: 60rpx;margin-top: 40rpx;margin-left: 5%;"
-				mode=""></image>
+			<view class="inpSearch  ">
+				<input type="text" style="width: 170rpx;text-align: center;" @tap.stop="searchHandle"
+					@input="searchHandle">
+				<nut-icon size='18px' type="search"></nut-icon>
+			</view>
 			<view class="country_code" v-for="item of CountryList" @click="changeCountry(item)">
 				<text style="margin-right: 10rpx;">{{item.code}}</text>
 				<text>{{item.countryName}}</text>
@@ -138,6 +141,7 @@
 				CountryList: [],
 				show: false,
 				codeTips: "",
+				newCountryList: []
 
 			}
 		},
@@ -170,12 +174,29 @@
 			codeChange(tip) {
 				this.codeTips = tip;
 			},
+			searchHandle(e) {
+				if (!e.detail.value) {
+					this.CountryList = this.newCountryList
+					return
+				}
+				let searchCountryList = []
+				this.newCountryList.forEach(item => {
+					if (item.code.includes(e.detail.value)) {
+						searchCountryList.push(item)
+					}
+				})
+				this.CountryList = searchCountryList
+			},
 			async getCountryListfn() {
 				let res = await getCountryList();
 				if(res.code == 1){
 					this.CountryList = res.data;
+					this.newCountryList = res.data;
 				}
-
+			},
+			popShow(){
+				this.CountryList = this.newCountryList;
+				this.show = true;
 			},
 			changeCountry(item) {
 				this.mobile = '';
@@ -274,6 +295,17 @@
 </script>
 
 <style lang="scss">
+	.inpSearch {
+		top: 0.3125rem;
+		left: 0.625rem;
+		width: 90%;
+		height: 2.0875rem;
+		border-radius: 1.25rem;
+		border: 0.03125rem solid #000;
+		display: flex;
+		align-items: center;
+		margin: 0.625rem auto;
+	}
 	.nav {
 		width: 100%;
 		height: 88rpx;
