@@ -81,9 +81,10 @@
 						tag: 'null'
 					}
 				}).then(res => {
-					toast({title: res.msg});
 					if(res.code==1){
 						history.back()
+					}else{
+						toast({title: res.msg});
 					}
 					uni.hideLoading()
 				}).catch(err => {

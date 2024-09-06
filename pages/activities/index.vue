@@ -33,7 +33,6 @@
 </template>
 
 <script>
-	import {toast} from '@/utils/tools'
 	import request from '@/utils/request'
 
 	export default {

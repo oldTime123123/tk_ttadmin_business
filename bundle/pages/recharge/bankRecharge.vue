@@ -166,11 +166,12 @@
 						cert: this.cert
 					}
 				}).then(res => {
-					this.$toast({title: res.msg})
 					if(res.code==1){
 						setTimeout(() => {
 							history.back()
 						}, 1000);
+					}else{
+						this.$toast({title: res.msg})
 					}
 				}).catch(err => {
 					this.$toast({
@@ -273,7 +274,6 @@
 					method: "POST",
 					data: formData
 				}).then(res => {
-					this.$toast({title: res.msg});
 					if(res.code==1){
 						let data = res.data;
 						if (data.is_post == 0) {
@@ -297,6 +297,8 @@
 									.verify_money
 							})
 						}
+					}else{
+						this.$toast({title: res.msg});
 					}
 				}).catch(err => {
 					this.$toast({

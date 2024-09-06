@@ -346,19 +346,24 @@ export default {
         action = this.action;
 
       if (action == "close") {
-        await apiOrderClose({ id });
+        let res = await apiOrderClose({ id });
+        this.getResult(res)
       } else if (action == "del") {
-        await apiOrderDelete({ id });
+        let res =  await apiOrderDelete({ id });
+        this.getResult(res)
       } else if (action == "confirm") {
-        await apiOrderConfirm({ id });
+        let res = await apiOrderConfirm({ id });
+        this.getResult(res)
       }
-
       this.initOrderDetail();
-      this.$refs.uToast.show({
-        title: this.$t('操作成功'),
-        type: "success",
-      });
     },
+    getResult(res){
+      if(res.code != 1){
+        this.$toast({
+          title: res.msg
+        });
+      }
+    }
   },
 
   onLoad() {

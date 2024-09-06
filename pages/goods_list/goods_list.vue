@@ -258,16 +258,16 @@
 			async goodsSetting() {
 				let id = this.curData.id,
 					action = this.action == 'del' ? 'delete' : this.action
-				await apiGoodsOperation({
+				let res = await apiGoodsOperation({
 					action,
 					id
 				})
-
 				this.$refs.mescrollRef[this.current].mescroll.resetUpScroll()
-				this.$refs.uToast.show({
-					title: this.$t('操作成功'),
-					type: 'success'
-				})
+				if(res.code != 1){
+					this.$toast({
+                        title: res.msg
+                    });
+				}
 			}
 		}
 	}

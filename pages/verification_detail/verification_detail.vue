@@ -96,13 +96,16 @@
 			handleVerificationConfirm() {
 				apiVerificationOrderConfirm({
 					id: this.orderInfo.id,
-				}).then((data) => {
-					this.$toast({
-						title: this.$t('核销成功'),
-					});
-					setTimeout(() => {
-						this.$Router.back();
-					}, 0.5 * 1000);
+				}).then((res) => {
+					if(res.code == 1){
+						setTimeout(() => {
+							this.$Router.back();
+						}, 0.5 * 1000);
+					}else{
+						this.$toast({
+							title: res.msg,
+						});
+					}
 				});
 			},
 

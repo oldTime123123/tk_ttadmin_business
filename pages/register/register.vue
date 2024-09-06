@@ -13,24 +13,24 @@
 
 
 		<view class="flex mb20">
-			<view v-if="isShowMobile" class="btns" @click="changeType(1)" :class="type==1?'changeTy':''">
+			<view v-if="isShowMobile==1" class="btns" @click="changeType(1)" :class="type==1?'changeTy':''">
 				{{this.$t('register.rg4')}}
 			</view>
-			<view v-if="isShowEmail" class="btns" @click="changeType(2)" :class="type==2?'changeTy':''">
+			<view v-if="isShowEmail==1" class="btns" @click="changeType(2)" :class="type==2?'changeTy':''">
 				{{this.$t('register.rg5')}}
 			</view>
 
 		</view>
 
 		<view class="input-container ">
-			<view v-if="type==1" class="input-item flex u-skeleton-circle input_box">
+			<view v-if="type==1&&isShowMobile==1" class="input-item flex u-skeleton-circle input_box">
 				<view class="" @click="show = true" style="margin-right: 20rpx; margin-right: 20rpx;">
 					{{country_code}}
 					<u-icon style="margin-left: 10rpx;" name="arrow-down"></u-icon>
 				</view>
 				<u-input v-model="mobile" class="input" :placeholder="this.$t('register.rg6')" />
 			</view>
-			<view v-else class="input-item flex u-skeleton-circle input_box">
+			<view v-if="type==2&&isShowEmail==1" class="input-item flex u-skeleton-circle input_box">
 				<image src="../../static/images/em.png" style="width: 40rpx;height: 40rpx;margin-right: 20rpx" mode="">
 				</image>
 				<u-input v-model="email" class="input" :placeholder="this.$t('register.rg7')" />
@@ -54,7 +54,7 @@
 				</button>
 			</view>
 
-			<view v-if="type==2" class="input-item flex u-skeleton-circle input_box">
+			<view v-if="type==2&&isShowEmail==1" class="input-item flex u-skeleton-circle input_box">
 				<image src="../../static/images/yan.png" style="width: 40rpx;height: 40rpx;margin-right: 20rpx;"
 					mode=""></image>
 
@@ -224,7 +224,10 @@
 						this.isShowEmail = res.data.email;
 						this.isShowMobile = res.data.mobile;
 						if(this.isShowMobile){
+							this.type = 1;
 							this.getCountryListfn()
+						}else{
+							this.type = 2;
 						}
 					}
 				}).catch((err)=>{
@@ -261,7 +264,6 @@
 			},
 			async getCountryListfn() {
 				let res = await getCountryList()
-				this.$toast({title: res.msg});
 				if (res.code == 1) {
 					this.CountryList = res.data;
 					this.isShowMsg = res.data[0].is_sms;
@@ -354,11 +356,12 @@
 				}
 				if (this.type == 1) {
 					register(data).then((res) => {
-						this.$toast({title: res.msg});
 						if (res.code == 1) {
 							this.loginHandle(res.data.user)
 							// this.login(data)
 							//  跳转到登录页
+						}else{
+							this.$toast({title: res.msg});
 						}
 						uni.hideLoading();
 					}).catch(() => {
@@ -367,11 +370,12 @@
 				} else {
 
 					emailRegister(emailData).then((res) => {
-						this.$toast({title: res.msg});
 						if (res.code == 1) {
 							this.loginHandle(res.data.user)
 							// this.login(data)
 							//  跳转到登录页
+						}else{
+							this.$toast({title: res.msg});
 						}
 						uni.hideLoading();
 					}).catch((err) => {
@@ -452,9 +456,10 @@
 					email: this.email,
 					// key: SMSType.REGISTER,
 				}).then((res) => {
-					this.$toast({title: res.msg});
 					if (res.code == 1) {
 						this.$refs.uCode.start();
+					}else{
+						this.$toast({title: res.msg});
 					}
 				});
 			},
@@ -471,11 +476,12 @@
 					// key: SMSType.REGISTER,
 					country_code: this.country_code
 				}).then((res) => {
-					toast({
-						title: res.msg
-					});
 					if (res.code == 1) {
 						this.$refs.uCode.start();
+					}else{
+						toast({
+							title: res.msg
+						});
 					}
 				});
 			},

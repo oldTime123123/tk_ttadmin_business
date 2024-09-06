@@ -266,7 +266,6 @@
 			logout() {
 				//  退出登录
 				apiLogout().then((res) => {
-					this.$toast({title: res.msg});
 					if(res.code==1){
 						uni.removeStorageSync('token')
 						this.$store.commit("logout");
@@ -276,6 +275,8 @@
 							// });
 							window.location.href = window.location.origin
 						}, 500);
+					}else{
+						this.$toast({title: res.msg});
 					}
 				});
 			},

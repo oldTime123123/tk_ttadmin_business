@@ -117,14 +117,14 @@
                     weekdays: this.weekdays.filter(item => typeof item == 'string' || typeof item == 'number')
                 }
                 
-                await apiSetShopInfo({...params})
-                this.$refs.uToast.show({
-                    title: '设置成功',
-                    type: 'success'
-                })
-                setTimeout(() => {
-                    this.$Router.back()
-                }, 1000)
+                let res = await apiSetShopInfo({...params})
+                if(res.code == 1){
+                    setTimeout(() => {
+                        this.$Router.back()
+                    }, 1000)
+                }else{
+                    this.$toast({title: res.msg})
+                }
             }
         }
     }

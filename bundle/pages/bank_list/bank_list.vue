@@ -60,9 +60,10 @@
 
             async clickBtn(event, id) {
                 const res = await apiDelBank({id})
-                toast({title: res.msg});
                 if(res.code==1){
                     this.getWithdrawInfoFunc();
+                }else{
+                    toast({title: res.msg});
                 }
             },
             

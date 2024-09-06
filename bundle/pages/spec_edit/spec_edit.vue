@@ -135,15 +135,14 @@
             async onSubmit() {
                 let items = [];
                 items = this.goodsInfo.goods_item.map(({id,market_price,price,stock,chengben_price}) => ({id,market_price,price,stock,chengben_price}))
-                await apiGoodsEdit({items})
-                this.$refs.uToast.show({
-                    title: '设置成功',
-                    type: 'success'
-                })
-                
-                setTimeout(() => {
-                    this.$Router.back()
-                }, 1000)
+                let res = await apiGoodsEdit({items})
+                if(res.code == 1){
+                    setTimeout(() => {
+                        this.$Router.back()
+                    }, 1000)
+                }else{
+                    this.$toast({title: res.msg})
+                }
             }
 		},
 

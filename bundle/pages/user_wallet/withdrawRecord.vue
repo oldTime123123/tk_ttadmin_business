@@ -98,12 +98,13 @@
 					method: "POST",
 					data: this.pages
 				}).then(res => {
-					toast({title: res.msg});
 					if(res.code==1){
 						if(res.data.lists){
 							this.$refs.paging.complete(res.data.lists);
 							this.pages.page += 1
 						}
+					}else{
+						toast({title: res.msg});
 					}
 				})
 			}

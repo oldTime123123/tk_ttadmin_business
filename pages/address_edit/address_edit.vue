@@ -168,13 +168,12 @@
                 }
             },
             getResult(res){
-                this.$toast({
-                    title: res.msg
-                });
                 if(res.code==1){
                     setTimeout(() => {
                         this.$Router.back()
                     }, 1000)
+                }else{
+                    this.$toast({title: res.msg});
                 }
             },
             async getAddressFunc(id) {

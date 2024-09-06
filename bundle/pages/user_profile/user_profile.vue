@@ -79,7 +79,6 @@
             logout() {
                 //  退出登录
                 apiLogout().then(res => {
-                    toast({title: res.msg});
                     if(res.code==1){
                         this.$store.commit("logout");
                         setTimeout(() => {
@@ -87,6 +86,8 @@
                                 url: "/pages/login/login"
                             })
                         }, 1000)
+                    }else{
+                        toast({title: res.msg});
                     }
                 })
             }

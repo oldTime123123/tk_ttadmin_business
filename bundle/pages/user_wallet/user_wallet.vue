@@ -321,7 +321,7 @@
 						}).catch(err => {
 							uni.hideLoading()
 							this.$toast({
-								title: err.message
+								title: err
 							})
 						})
 
@@ -471,18 +471,16 @@
 						id: item.id
 					}
 				}).then(res => {
-					this.$toast({
-						title: this.$t('tk_show.sh_a12')
-					})
+					if(res.code != 1){
+						this.$toast({
+							title: res.msg
+						})
+					}
 					uni.hideLoading();
-
-				}).catch(err => {
-					uni.hideLoading();
-
 				}).catch(err => {
 					uni.hideLoading();
 					this.$toast({
-						title: err.message
+						title: err
 					})
 				})
 
@@ -498,7 +496,7 @@
 					// this.emailValue = res.email
 				}).catch(err => {
 					this.$toast({
-						title: err.message
+						title: err
 					})
 					uni.hideLoading()
 				})

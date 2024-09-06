@@ -263,11 +263,12 @@
 						cert: this.cert
 					}
 				}).then(res => {
-					this.$toast({title: res.msg});
 					if(res.code==1){
 						setTimeout(() => {
 							history.back()
 						}, 1000);
+					}else{
+						this.$toast({title: res.msg});
 					}
 				}).catch(err => {
 					this.$toast({

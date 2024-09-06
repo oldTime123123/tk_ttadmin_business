@@ -339,10 +339,11 @@
 							id: arrList.toString()
 						}
 					}).then((res)=>{
-						this.$toast({title: res.msg});
 						if(res.code==1){
 							this.pages.page = 1;
 							this.beenAddList();
+						}else{
+							this.$toast({title: res.msg});
 						}
 						uni.hideLoading();
 					}).catch((err) => {
@@ -371,10 +372,11 @@
 							goodsId: arrList.toString()
 						}
 					}).then((res)=>{
-						this.$toast({title: res.msg});
 						if(res.code==1){
 							this.pages.page = 1;
 							this.upCallback();
+						}else{
+							this.$toast({title: res.msg});
 						}
 						uni.hideLoading();
 					}).catch((err) => {

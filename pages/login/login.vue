@@ -17,10 +17,10 @@
 				<view class="btns" @click="changeType(1)" :class="type==1?'changeTy':''">
 					{{this.$t('register.rg30')}}
 				</view>
-				<view class="btns" @click="changeType(2)" :class="type==2?'changeTy':''">
+				<view v-if="isShowMobile==1" class="btns" @click="changeType(2)" :class="type==2?'changeTy':''">
 					{{this.$t('register.rg31')}}
 				</view>
-				<view class="btns" @click="changeType(3)" :class="type==3?'changeTy':''">
+				<view v-if="isShowEmail==1" class="btns" @click="changeType(3)" :class="type==3?'changeTy':''">
 					{{this.$t('register.rg32')}}
 				</view>
 			</view>
@@ -90,6 +90,7 @@
 
 <script>
 	import {
+		getRegisterType,
 		getCountryList
 	} from '@/api/user'
 	import {
@@ -149,14 +150,31 @@
 				show: false,
 				mobile: '',
 				country_code: '',
-				CountryList: []
+				CountryList: [],
+				isShowEmail: false,
+				isShowMobile: false,
+
 			};
 		},
 
 		methods: {
 			...mapMutations(['login']),
 			...mapActions(['getUser']),
-
+			getRegisterType(){
+				getRegisterType().then((res)=>{
+					if(res.code==1){
+						this.isShowEmail = res.data.email;
+						this.isShowMobile = res.data.mobile;
+						if(this.isShowMobile){
+							this.getCountryListfn()
+						}
+					}
+				}).catch((err)=>{
+					toast({
+						title: err
+					});
+				})
+			},
 			juplink() {
 				uni.navigateTo({
 					url: '../register/register'
@@ -314,7 +332,9 @@
 		},
 
 		onLoad() {
-			this.getCountryListfn();
+			this.getRegisterType()
+
+			// this.getCountryListfn();
 
 			this.appjudge(window.location.href)
 

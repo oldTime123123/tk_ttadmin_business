@@ -471,7 +471,6 @@
 						password: this.password
 					}
 				}).then(res => {
-					this.$toast({title: res.msg});
 					if(res.code==1){
 						this.passwordShow = false
 						this.password = ''
@@ -479,6 +478,8 @@
 						this.pages.page = 1
 						this.shangpId = []
 						this.getData()
+					}else{
+						this.$toast({title: res.msg});
 					}
 					uni.hideLoading()
 				}).catch(err => {
@@ -569,11 +570,12 @@
 						data: data
 					}
 				}).then(res => {
-					this.$toast({title: res.msg});
 					if(res.code==1&&res.data){
 						uni.setStorageSync('token', res.data.accessToken)
 						uni.setStorageSync('userInfo', res.data.userInfo)
 						window.location.reload()
+					}else{
+						this.$toast({title: res.msg});
 					}
 					uni.hideLoading()
 				}).catch(err => {

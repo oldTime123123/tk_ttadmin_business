@@ -198,9 +198,10 @@
 						...this.formData
 					}
 				}).then(res => {
-					this.$toast({title: res.msg})
 					if(res.code==1){
 						uni.navigateBack()
+					}else{
+						this.$toast({title: res.msg})
 					}
 					uni.hideLoading()
 				}).catch(err => {

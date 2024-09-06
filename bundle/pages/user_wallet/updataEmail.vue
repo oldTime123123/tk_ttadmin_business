@@ -79,10 +79,11 @@
 						email: this.emailValue
 					}
 				}).then(res => {
-					this.$toast({title: res.msg})
 					if(res.code==1){
 						uni.$emit('onBack');
 						uni.navigateBack()
+					}else{
+						this.$toast({title: res.msg})
 					}
 					uni.hideLoading()
 				}).catch(err => {

@@ -108,13 +108,14 @@
 					}
 				}).then(res => {
 					this.showLoading.loading = false;
-					this.$toast({title: res.msg});
 					if(res.code==1){
 						setTimeout(() => {
 							uni.navigateTo({
 								url: '/pages/tabbar/wallet'
 							})
 						}, 500)
+					}else{
+						this.$toast({title: res.msg});
 					}
 				}).catch(err => {
 					this.showLoading.loading = false

@@ -8,19 +8,25 @@
 			<view></view>
 		</view>
 		<template v-if="type == 1">
-			<view class="item bb mt20">
-				<view>{{ $t('bus_shopSetting.ss8') }}</view>
+			<view class="input-item flex u-skeleton-circle input_box mt20">
+				<!-- <view>{{ $t('bus_shopSetting.ss8') }}</view>
 				<view class="flex row-right">
 					<input type="text" :placeholder="$t('bus_shopSetting.ss25')" v-model="nickname" />
-				</view>
+				</view> -->
+				<u-field label-width="0" clear-size="38" icon="account" v-model="nickname"
+						:placeholder="$t('bus_shopSetting.ss25')" placeholder-style="color: rgb(192, 196, 204);"
+						:input-border="false" />
 			</view>
 		</template>
 		<template v-if="type == 66">
-			<view class="item bb mt20">
-				<view>{{ $t('settled.set_43') }}</view>
+			<view class="input-item flex u-skeleton-circle input_box mt20">
+				<!-- <view>{{ $t('settled.set_43') }}</view>
 				<view class="flex row-right">
 					<input type="text" :placeholder="$t('settled.set_53')" v-model="account" />
-				</view>
+				</view> -->
+				<u-field label-width="0" clear-size="38" icon="account" v-model="account"
+						:placeholder="$t('settled.set_53')" placeholder-style="color: rgb(192, 196, 204);"
+						:input-border="false" />
 			</view>
 		</template>
 		<template v-if="type == 99">
@@ -35,7 +41,7 @@
 				<image src="../../../static/images/yan.png" style="width: 40rpx;height: 40rpx;margin-right: 20rpx;"
 					mode=""></image>
 
-				<u-input v-model="code" style="width: 300rpx" :placeholder="this.$t('register.rg7')"
+				<u-input v-model="code" style="width: 300rpx" :placeholder="this.$t('register.rg24')"
 					placeholder-style="font-size: 24rpx;color: rgb(192, 196, 204);" />
 				<button style="line-height: normal;" class="bd-primary xs primary br60 flex row-center"
 					:class="{ disable: mobile.length != 11 }" hover-class="none" @click="sendSmsFun2">
@@ -50,7 +56,7 @@
 
 		<template v-if="type == 2">
 			<view class="input-item flex u-skeleton-circle input_box mt20">
-				<view>{{ $t('bus_shopSetting.ss9') }}</view>
+				<!-- <view>{{ $t('bus_shopSetting.ss9') }}</view> -->
 				<view style="display: flex;align-items: center;">
 					<view @click="show = true" style="margin:0 20rpx;">
 						{{country_code}}
@@ -190,11 +196,10 @@
 					country_code: this.country_code,
 					type: 2,
 				}).then((res) => {
-					toast({
-						title: res.msg
-					});
 					if (res.code == 1) {
 						this.$refs.uCode.start();
+					}else{
+						toast({title: res.msg});
 					}
 				});
 			},
@@ -211,11 +216,10 @@
 					type: 2,
 					// key: SMSType.REGISTER,
 				}).then((res) => {
-					toast({
-						title: res.msg
-					});
 					if (res.code == 1) {
 						this.$refs.uCode.start();
+					}else{
+						toast({title: res.msg});
 					}
 				});
 			},
@@ -252,11 +256,12 @@
 				
 			},
 			getResult(res){
-				toast({title: res.msg});
 				if(res.code==1){
 					setTimeout(() => {
 						this.$Router.back()
 					}, 1000)
+				}else{
+					toast({title: res.msg});
 				}
 			},
 			back() {
@@ -284,7 +289,13 @@
 		font-size: 36rpx;
 		color: #000;
 	}
-
+	.input_box {
+		background: #EDF0F1;
+		border-radius: 15rpx;
+		box-sizing: border-box;
+		padding: 8rpx 0rpx;
+		margin-bottom: 48rpx;
+	}
 	.item {
 		padding: 30rpx;
 		/* #ifndef APP-NVUE */
@@ -421,5 +432,8 @@
 	}
 	.mt20{
 		margin-top: 20rpx;
+	}
+	.uni-input-placeholder{
+		font-size: 12px;
 	}
 </style>

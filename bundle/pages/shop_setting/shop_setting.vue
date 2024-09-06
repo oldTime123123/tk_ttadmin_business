@@ -245,9 +245,11 @@
 						logo: e.data.uri
 					}
 				}).then(res => {
-					this.$toast({
-						title: res.msg
-					})
+					if(res.code != 1){
+						this.$toast({
+							title: res.msg
+						})
+					}
 				}).catch(err => {
 					this.$toast({
 						title: err

@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2024-08-09 09:23:59
  * @LastEditors: chenpn chenpn699@gmail.com
- * @LastEditTime: 2024-09-05 20:23:34
+ * @LastEditTime: 2024-09-06 13:59:33
  * @FilePath: \1\web_business\bundle\pages\mine\term.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -32,9 +32,12 @@
                 <text>
                     {{ $t('bus_term.bt3') }}: {{ termInfo.invite_code }}
                 </text>
-                <text @click="copy(termInfo.invite_code)">
-                    {{ $t('bus_term.bt4') }}
-                </text>
+                <view style="background-color: #3FAFF9;box-sizing: border-box;padding: 5px;border-radius: 5px;"
+						@click="copy(termInfo.invite_code)">
+                    <view class="copyBtn flex-center ">
+                        <image src="../../static/images/copy.png" style="width: 28rpx;height: 28rpx;"></image>
+                    </view>
+                </view>
             </view>
             <view class="links">
                 <view @click="goRegist" class="column">
@@ -85,7 +88,6 @@
 </template>
 
 <script>
-    import {toast} from '@/utils/tools'
 	import request from '@/utils/request'
     import { copy } from "@/utils/tools.js";
     export default{
@@ -186,7 +188,7 @@
         /* padding: 50rpx; */
         background-color: #fff;
         height: 100vh;
-        font-size: 18px;
+        font-size: 15px;
     }
     .header{
         height: 120px;
@@ -250,7 +252,7 @@
         background: #40AFFA;
         color: #fff;
         line-height: 60px;
-        font-size: 20px;
+        font-size: 18px;
     }
     .tabs-col{
         text-align: center !important;

@@ -240,7 +240,9 @@
                         password: this.password,
                     }
                 }).then(res => {
-                    this.$toast({title: res.msg})
+                    if(res.code != 1){
+                        this.$toast({title: res.msg})
+                    }
                 })
             },
             Agree(num){

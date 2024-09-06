@@ -291,7 +291,6 @@
 					}
 				})
 				.then(res => {
-					toast({title: res.msg});
 					if(res.code==1){
 						this.show1 = false
 						this.usePassword = ''
@@ -300,6 +299,8 @@
 						this.yhj_list = []
 						this.selectIds = []
 						this.num_sum = 0
+					}else{
+						toast({title: res.msg});
 					}
 				}).catch(err => {
 					uni.showToast({

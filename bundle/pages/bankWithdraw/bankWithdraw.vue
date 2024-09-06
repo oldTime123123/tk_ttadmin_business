@@ -151,9 +151,10 @@
 						amount: this.inputNum
 					}
 				}).then(res => {
-					this.$toast({title: res.msg})
 					if(res.code==1){
 						history.back()
+					}else{
+						this.$toast({title: res.msg})
 					}
 				}).catch(err => {
 					this.$toast({

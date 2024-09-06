@@ -72,11 +72,12 @@
                 const res = await apiAddBank({
                     ...this.form
                 })
-                toast({title: res.msg});
                 if(res.code==1){
                     setTimeout(() => {
                         uni.navigateBack()
                     }, 1000)
+                }else{
+                    toast({title: res.msg});
                 }
             },
             
@@ -84,11 +85,12 @@
                 const res = await apiEditBank({
                     ...this.form
                 })
-                toast({title: res.msg});
                 if(res.code==1){
                     setTimeout(() => {
                         uni.navigateBack()
                     }, 1000)
+                }else{
+                    toast({title: res.msg});
                 }
             },
             

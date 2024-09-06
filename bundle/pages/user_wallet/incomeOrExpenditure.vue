@@ -84,12 +84,14 @@
 							limit: this.pages.limit
 						}
 					}).then(res => {
-						toast({title: res.msg});
-						if(res.code==1&&res.data.list){
-							this.$refs.paging.complete(res.data.list);
-							this.pages.page += 1
+						if(res.code==1){
+							if(res.data){
+								this.$refs.paging.complete(res.data.list);
+								this.pages.page += 1
+							}
+						}else{
+							toast({title: res.msg});
 						}
-						
 					}).catch(err => {
 						toast({title: err});
 					})

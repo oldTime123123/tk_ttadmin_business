@@ -358,11 +358,12 @@
 						order_no: this.pageData.order_no
 					}
 				}).then(res => {
-					this.$toast({title: res.msg})
 					if(res.code==1){
 						uni.navigateTo({
 							url: '/bundle/pages/user_wallet/user_wallet'
 						})
+					}else{
+						this.$toast({title: res.msg})
 					}
 				}).catch(err => {
 					this.$toast({title: err})

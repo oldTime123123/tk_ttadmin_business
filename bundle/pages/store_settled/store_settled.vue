@@ -263,11 +263,10 @@
 					mobile: this.form.mobile,
 					key: SMSType.SJSQYZ
 				}).then(res => {
-					toast({
-						title: res.msg
-					});
 					if (res.code == 1) {
 						this.$refs.uCode.start();
+					}else{
+						toast({title: res.msg});
 					}
 				})
 			},
@@ -310,7 +309,6 @@
 					// 	license: fileList
 				}
 				await shopApply(submitObj).then(res => {
-					toast({title: res.msg});
 					if(res.code == 1){
 						setTimeout(() => {
 							this.$Router.replace({
@@ -320,6 +318,8 @@
 								}
 							})
 						}, 1000)
+					}else{
+						toast({title: res.msg});
 					}
 					uni.hideLoading()
 				}).catch((err)=>{

@@ -283,9 +283,10 @@
 						password2: this.formData.password
 					}
 				}).then(res => {
-					this.$toast({title: res.msg})
 					if(res.code==1){
 						this.passwordShow = false
+					}else{
+						this.$toast({title: res.msg})
 					}
 					uni.hideLoading()
 				}).catch(err => {
@@ -320,9 +321,10 @@
 						email: this.emailValue
 					}
 				}).then(res => {
-					this.$toast({title: res.msg})
 					if(res.code==1){
 						this.emailShow = false
+					}else{
+						this.$toast({title: res.msg})
 					}
 					uni.hideLoading()
 				}).catch(err => {
@@ -366,11 +368,12 @@
 					method: "POST",
 					data: this.withdrawData
 				}).then(res => {
-					this.$toast({title: res.msg})
 					if(res.code==1){
 						this.withdraw = false
 						this.bankcardText = ''
 						balance(1)
+					}else{
+						this.$toast({title: res.msg})
 					}
 					uni.hideLoading()
 				}).catch(err => {
@@ -399,9 +402,6 @@
 						type: this.radioVal
 					}
 				}).then(res => {
-					this.$toast({
-						title: res.msg
-					})
 					if(res.code==1){
 						this.walletListFn()
 						uni.hideLoading()
@@ -412,6 +412,8 @@
 						this.editInfo.bank_num = null
 						uni.$emit('onBack');
 						uni.navigateBack()
+					}else{
+						this.$toast({title: res.msg})
 					}
 				}).catch(err => {
 					uni.hideLoading()
@@ -577,9 +579,11 @@
 					methods: 'get',
 					data: this.pages
 				}).then(res => {
-					if(res.code==1&&res.data){
-						this.paging.complete(res.data.data);
-						this.pages.page += 1
+					if(res.code==1){
+						if(res.data){
+							this.paging.complete(res.data.data);
+							this.pages.page += 1
+						}
 					}
 				}).catch(err => {
 					this.$toast({

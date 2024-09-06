@@ -108,9 +108,10 @@
 						id: this.content.id
 					}
 				}).then((res)=>{
-					this.$toast({title: res.msg})
 					if(res.code==1){
 						this.$emit('unpdateList',this.Gotype);
+					}else{
+						this.$toast({title: res.msg})
 					}
 					uni.hideLoading()
 				}).catch((err) => {
@@ -128,9 +129,10 @@
 						goodsId: this.content.id
 					}
 				}).then((res)=>{
-					this.$toast({title: res.msg})
 					if(res.code==1){
 						this.$emit('unpdateList',this.Gotype);
+					}else{
+						this.$toast({title: res.msg})
 					}
 					uni.hideLoading()
 				}).catch((err) => {

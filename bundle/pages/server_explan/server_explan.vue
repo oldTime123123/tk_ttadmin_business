@@ -12,7 +12,6 @@
 </template>
 
 <script>
-	import {toast} from '@/utils/tools'
 	import {
 		apiPolicyAgreement,
 	} from "@/api/app"

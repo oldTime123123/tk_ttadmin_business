@@ -75,10 +75,6 @@
 	import {
 		setBankcard
 	} from '@/api/app.js';
-
-	import {
-		Toast
-	} from '@nutui/nutui';
 	export default {
 		data() {
 			return {
@@ -110,10 +106,14 @@
 				});
 			},
 			async save() {
-				const data = await setBankcard({
+				const res = await setBankcard({
 					...this.dataForm
 				})
-				history.back()
+				if(res.code==1){
+					history.back()
+				}else{
+                    toast({title: res.msg});
+				}
 			}
 		},
 		onShow() {
