@@ -24,8 +24,8 @@ import langDe from './de';
 import langFr from './fr';
 // import langHe from './he';
 // import langIt from './it';
-// import langJa from './ja';
-// import langKo from './ko';
+import langJa from './ja';
+import langKo from './ko';
 // import langPl from './pl';
 // import langTh from './th';
 // import langTr from './tr';
@@ -53,8 +53,8 @@ const messages = {
 	'fr': langFr,
 	// 'he': langHe,
 	// 'it': langIt,
-	// 'ja': langJa,
-	// 'ko': langKo,
+	'ja': langJa,
+	'ko': langKo,
 	// 'pl': langPl,
 	// 'th': langTh,
 	// 'tr': langTr,

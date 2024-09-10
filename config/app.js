@@ -30,8 +30,8 @@ const baseURLMap = {
 }
 
 // const baseURL = SWITCH_DEVELOPMENT ? baseURLMap['development'] : baseURLMap[process.env.NODE_ENV]
-// const baseURL = 'https://api.ttadmin.in'
-const baseURL = 'https://likeshop.task678.com'
+const baseURL = 'https://api.ttadmin.in'
+// const baseURL = 'https://likeshop.task678.com'
 
 
 /** E API BaseURL **/
