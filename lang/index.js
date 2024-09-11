@@ -34,7 +34,7 @@ import langKo from './ko';
 // import langVi from './vi';
 import langZh from './zh';
 // import langMS from './ms';
-// import langId from './id';
+import langId from './id';
 
 Vue.use(VueI18n)
 
@@ -47,7 +47,7 @@ const messages = {
 	// 'pt': langPt,
 	// 'in': langIn,
 	// 'az': langAz,
-	// 'id': langId,
+	'id': langId,
 	// 'bd': langBd,
 	'de': langDe,
 	'fr': langFr,
